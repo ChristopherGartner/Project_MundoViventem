@@ -1,5 +1,6 @@
 package com.mundoviventem.component.core;
 
+
 import com.badlogic.gdx.math.Vector2;
 
 /**
