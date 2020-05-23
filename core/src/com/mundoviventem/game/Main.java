@@ -5,6 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mundoviventem.component.EmptyGameObject;
+import com.mundoviventem.component.core.BaseComponent;
+import com.mundoviventem.component.core.Transform;
 
 public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -23,6 +26,13 @@ public class Main extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
+
+		EmptyGameObject emptyGameObject = new EmptyGameObject();
+
+		System.out.println("BEFORE: " + emptyGameObject.getComponents());
+		emptyGameObject.removeComponent(Transform.class);
+		System.out.println("AFTER: " + emptyGameObject.getComponents());
+
 	}
 	
 	@Override
