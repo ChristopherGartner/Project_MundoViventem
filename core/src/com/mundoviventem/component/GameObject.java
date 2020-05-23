@@ -22,7 +22,6 @@ public abstract class GameObject
 
         // Every game object has a dedicated transform instance
         this.components.add(new Transform());
-        System.out.println("asd");
     }
 
     /**
