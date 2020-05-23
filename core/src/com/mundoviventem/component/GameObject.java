@@ -53,6 +53,7 @@ public abstract class GameObject
     public void addComponent(BaseComponent component)
     {
         this.components.add(component);
+        component.onEnable();
     }
 
     /**
@@ -62,7 +63,9 @@ public abstract class GameObject
      */
     public void removeComponent(Class componentClass)
     {
-        this.components.remove(this.getComponentFromClass(componentClass));
+        BaseComponent component = this.getComponentFromClass(componentClass);
+        component.onDisable();
+        this.components.remove(component);
     }
 
     /**
@@ -83,8 +86,14 @@ public abstract class GameObject
     }
 
     /**
-     * This method gets called once per tick. It should contain all the logic by the game object
+     * This method gets called once per tick. It should contain all the logic by the game object.
+     * If super call is missing, the components wont get updated
      */
-    public abstract void update();
+    public void update()
+    {
+        for (BaseComponent component: this.components) {
+            component.update();
+        }
+    }
 
 }
