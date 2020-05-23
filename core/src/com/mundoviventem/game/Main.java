@@ -6,16 +6,23 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mundoviventem.component.EmptyGameObject;
-import com.mundoviventem.component.core.Transform;
+import com.mundoviventem.component.GameObjectManager;
+
+import java.util.UUID;
 
 public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	
+	GameObjectManager gameObjectManager;
+	EmptyGameObject emptyGameObject;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		gameObjectManager = new GameObjectManager();
+		emptyGameObject = new EmptyGameObject();
+		gameObjectManager.addInstantiatedGameObject(UUID.randomUUID(), emptyGameObject);
 	}
 
 	@Override
@@ -26,12 +33,7 @@ public class Main extends ApplicationAdapter {
 		batch.draw(img, 0, 0);
 		batch.end();
 
-		EmptyGameObject emptyGameObject = new EmptyGameObject();
-
-		System.out.println("BEFORE: " + emptyGameObject.getComponents());
-		emptyGameObject.removeComponent(Transform.class);
-		System.out.println("AFTER: " + emptyGameObject.getComponents());
-
+		gameObjectManager.updateInstantiatedGameObjects();
 	}
 	
 	@Override
