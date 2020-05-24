@@ -13,6 +13,7 @@ public class Transform extends BaseComponent
     private Vector2 position;
     private float rotation;
     private Vector2 scale;
+    private int backgroundLevel;
 
     /**
      * Returns the position vector consisting of X and Y value
@@ -72,6 +73,28 @@ public class Transform extends BaseComponent
     public void setScale(Vector2 scale)
     {
         this.scale = scale;
+    }
+
+    /**
+     * Returns the background level of the game object.
+     * As higher the background level as nearer is the object layer to the camera.
+     *
+     * @return int
+     */
+    public int getBackgroundLevel()
+    {
+        return this.backgroundLevel;
+    }
+
+    /**
+     * Sets the background level of the game object:
+     * As higher the background level as nearer is the object layer to the camera.
+     *
+     * @param backgroundLevel = The background level of the game object
+     */
+    public void setBackgroundLevel(int backgroundLevel)
+    {
+        this.backgroundLevel = backgroundLevel;
     }
 
     @Override
