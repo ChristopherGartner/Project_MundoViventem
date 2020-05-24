@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * Class for content managing of ".kvfb" files
  */
-public class KeyValueFileManager extends FileTypeManager
+public class KeyValueFileByteManager extends FileTypeManager
 {
 
     public static final int BYTE_MAX_SIZE       = 255;

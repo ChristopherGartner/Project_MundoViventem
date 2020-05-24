@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mundoviventem.component.game_objects.EmptyGameObject;
 import com.mundoviventem.component.GameObjectManager;
 import com.mundoviventem.io.FileManager;
-import com.mundoviventem.io.file_type_managers.KeyValueFileManager;
+import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
 
 import java.util.UUID;
 
@@ -29,7 +29,7 @@ public class Main extends ApplicationAdapter {
 		gameObjectManager.addInstantiatedGameObject(UUID.randomUUID(), emptyGameObject);
 		Main.Project_Path = FileManager.determineProjectPath();
 
-		KeyValueFileManager keyValueFileManager = new KeyValueFileManager();
+		KeyValueFileByteManager keyValueFileManager = new KeyValueFileByteManager();
 
 //		ArrayList<String> contentOfFile = new ArrayList<>();
 //		for (int i = 0; i < 1000; i++) {
