@@ -36,10 +36,12 @@ public class KeyValueFileTextureManager extends FileTypeManager
             String alias = lineArr[0];
             String path  = lineArr[1];
 
+            // Validate that structure only consists of one key and one value
             if(lineArr.length != 2) {
                 return false;
             }
             String filePath = Main.Project_Path + "\\core\\assets\\textures\\" + path;
+            // Validate that given texture path is correct
             if(!(new File(filePath)).exists()) {
                 return false;
             }
@@ -47,12 +49,21 @@ public class KeyValueFileTextureManager extends FileTypeManager
             texturePathArrayList.add(path);
         }
 
+        // Validate that texture paths and aliases are unique
         boolean pathsUnique = texturePathArrayList.size() == Arrays.stream(texturePathArrayList.toArray()).distinct().toArray().length;
         boolean aliasUnique = textureAliasArrayList.size() == Arrays.stream(textureAliasArrayList.toArray()).distinct().toArray().length;
 
         return pathsUnique && aliasUnique;
     }
 
+    /**
+     * Returns the content of the texture alias file
+     *
+     * @param fileName = The file containing the texture aliases
+     *
+     * @return HashMap<String, String>
+     * @throws Exception = When linting of file fails
+     */
     public HashMap<String, String> getContent(String fileName) throws Exception
     {
         if(!this.lint(fileName)) {

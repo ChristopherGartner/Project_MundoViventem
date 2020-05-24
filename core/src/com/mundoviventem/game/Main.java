@@ -9,9 +9,8 @@ import com.mundoviventem.component.game_objects.EmptyGameObject;
 import com.mundoviventem.component.GameObjectManager;
 import com.mundoviventem.io.FileManager;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
-import com.mundoviventem.io.file_type_managers.KeyValueFileTextureManager;
+import com.mundoviventem.texture.TextureRepository;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class Main extends ApplicationAdapter {
@@ -19,20 +18,21 @@ public class Main extends ApplicationAdapter {
 	Texture img;
 	GameObjectManager gameObjectManager;
 	EmptyGameObject emptyGameObject;
+	TextureRepository textureRepository;
 
 	public static String Project_Path;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("textures\\test_directory\\badlogic.jpg");
+		Main.Project_Path = FileManager.determineProjectPath();
 		gameObjectManager = new GameObjectManager();
 		emptyGameObject = new EmptyGameObject();
 		gameObjectManager.addInstantiatedGameObject(UUID.randomUUID(), emptyGameObject);
-		Main.Project_Path = FileManager.determineProjectPath();
+		textureRepository = new TextureRepository();
+		img = new Texture(textureRepository.getTexture("badlogic"));
 
 		KeyValueFileByteManager keyValueFileManager = new KeyValueFileByteManager();
-		KeyValueFileTextureManager keyValueFileTextureManager = new KeyValueFileTextureManager();
 
 //		ArrayList<String> contentOfFile = new ArrayList<>();
 //		for (int i = 0; i < 1000; i++) {
@@ -41,7 +41,6 @@ public class Main extends ApplicationAdapter {
 		//keyValueFileManager.createFile(contentOfFile, "files\\test");
 
 		try {
-			HashMap<String, String> textures = keyValueFileTextureManager.getContent("files\\test");
 			System.out.println(keyValueFileManager.getContent("files\\test"));
 		} catch (Exception exception) {
 			System.err.println("Du Lappen");
