@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mundoviventem.component.EmptyGameObject;
 import com.mundoviventem.component.GameObjectManager;
 import com.mundoviventem.io.FileManager;
+import com.mundoviventem.io.file_type_managers.KeyValueFileManager;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Main extends ApplicationAdapter {
@@ -28,7 +30,17 @@ public class Main extends ApplicationAdapter {
 		gameObjectManager.addInstantiatedGameObject(UUID.randomUUID(), emptyGameObject);
 		Main.Project_Path = FileManager.determineProjectPath();
 
-		String content = FileManager.getContent(Main.Project_Path + "\\files\\test.txt");
+		KeyValueFileManager keyValueFileManager = new KeyValueFileManager();
+
+		ArrayList<String> contentOfFile = new ArrayList<>();
+		for (int i = 0; i < 1000; i++) {
+			contentOfFile.add(i + "===Paul_Ist_Gay");
+		}
+		//keyValueFileManager.createFile(contentOfFile, "files\\test");
+
+		System.out.println(keyValueFileManager.getContent("files\\test"));
+
+		String content = FileManager.getContent(Main.Project_Path + "\\files\\test.kvfb");
 		System.out.println(content);
 	}
 
