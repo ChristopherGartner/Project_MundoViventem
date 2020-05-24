@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mundoviventem.component.EmptyGameObject;
 import com.mundoviventem.component.GameObjectManager;
+import com.mundoviventem.io.FileManager;
 
 import java.util.UUID;
 
@@ -16,6 +17,8 @@ public class Main extends ApplicationAdapter {
 	GameObjectManager gameObjectManager;
 	EmptyGameObject emptyGameObject;
 
+	public static String Project_Path;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -23,6 +26,10 @@ public class Main extends ApplicationAdapter {
 		gameObjectManager = new GameObjectManager();
 		emptyGameObject = new EmptyGameObject();
 		gameObjectManager.addInstantiatedGameObject(UUID.randomUUID(), emptyGameObject);
+		Main.Project_Path = FileManager.determineProjectPath();
+
+		String content = FileManager.getContent(Main.Project_Path + "\\files\\test.txt");
+		System.out.println(content);
 	}
 
 	@Override
