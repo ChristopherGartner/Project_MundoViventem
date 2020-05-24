@@ -41,6 +41,9 @@ public abstract class GameObject
      */
     public void setComponents(ArrayList<BaseComponent> components)
     {
+        for (BaseComponent component: components) {
+            component.setGameObject(this);
+        }
         this.components = components;
     }
 
@@ -51,6 +54,7 @@ public abstract class GameObject
      */
     public void addComponent(BaseComponent component)
     {
+        component.setGameObject(this);
         this.components.add(component);
         component.onEnable();
     }
@@ -63,6 +67,7 @@ public abstract class GameObject
     public void removeComponent(Class componentClass)
     {
         BaseComponent component = this.getComponentFromClass(componentClass);
+        component.setGameObject(null);
         component.onDisable();
         this.components.remove(component);
     }
