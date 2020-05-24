@@ -103,6 +103,7 @@ public class Transform extends BaseComponent
         this.position = new Vector2(0, 0);
         this.scale    = new Vector2(1, 1);
         this.rotation = 0f;
+        this.setBackgroundLevel(Integer.MAX_VALUE);
     }
 
     @Override
