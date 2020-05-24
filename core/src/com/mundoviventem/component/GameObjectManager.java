@@ -1,7 +1,5 @@
 package com.mundoviventem.component;
 
-
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -62,8 +60,10 @@ public class GameObjectManager
             UUID uuid             = entry.getKey();
             GameObject gameObject = entry.getValue();
 
-            gameObject.update();
-            System.out.println("Update successfully for GameObject " + uuid);
+            if(!gameObject.isGameObjectSleeping()) {
+                gameObject.updateGameObject();
+                System.out.println("Update successfully for GameObject " + uuid);
+            }
         }
     }
 }

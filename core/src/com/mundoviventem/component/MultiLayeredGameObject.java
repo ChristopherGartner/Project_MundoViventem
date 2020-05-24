@@ -37,13 +37,19 @@ public abstract class MultiLayeredGameObject extends GameObject
 
     /**
      * If this method gets overwritten, it is important to keep the parent call.
-     * Otherwise the sub components wont get updated.
+     * Otherwise the sub game objects wont get updated.
      */
-    @Override
-    public void update()
+    protected void updateSubGameObjects()
     {
         for (GameObject subGameObject: this.subComponents) {
             subGameObject.update();
         }
+    }
+
+    @Override
+    public void updateGameObject()
+    {
+        super.updateGameObject();
+        this.updateSubGameObjects();
     }
 }

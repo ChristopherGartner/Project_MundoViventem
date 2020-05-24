@@ -7,7 +7,7 @@ public class EmptyGameObject extends GameObject
 {
 
     @Override
-    public void update()
+    protected void update()
     {
         System.out.println("YEA I GOT UPDATED!");
     }

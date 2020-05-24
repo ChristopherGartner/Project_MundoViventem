@@ -12,6 +12,7 @@ public abstract class GameObject
 {
 
     private ArrayList<BaseComponent> components;
+    private boolean isSleeping;
 
     /**
      * Initializes components list
@@ -90,14 +91,59 @@ public abstract class GameObject
     }
 
     /**
-     * This method gets called once per tick. It should contain all the logic by the game object.
-     * If super call is missing, the components wont get updated
+     * Calls all update method of the game objects.
+     * This method shouldn't get overwritten for normal
+     * update functionality adding. Use "update()" method
+     * instead
      */
-    public void update()
+    public void updateGameObject()
+    {
+        this.updateComponents();
+        this.update();
+    }
+
+    /**
+     * This method gets called once per tick. It should contain all the logic by the game object.
+     */
+    protected abstract void update();
+
+    /**
+     * Updates each components. This gets called once per tick
+     */
+    protected void updateComponents()
     {
         for (BaseComponent component: this.components) {
             component.update();
         }
     }
 
+    /**
+     * Sets the sleeping state of game object to true.
+     * This results in a stopping of updates for this object
+     * while this state is enabled.
+     */
+    public void setGameObjectAsleep()
+    {
+        this.isSleeping = true;
+    }
+
+    /**
+     * Sets the sleeping state of game object to false.
+     * This results in a continuing of updates for this object
+     * each tick.
+     */
+    public void setGameObjectAwake()
+    {
+        this.isSleeping = false;
+    }
+
+    /**
+     * Returns whether the game object is asleep or not
+     *
+     * @return boolean
+     */
+    public boolean isGameObjectSleeping()
+    {
+        return this.isSleeping;
+    }
 }
