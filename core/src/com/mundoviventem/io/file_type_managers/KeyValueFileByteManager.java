@@ -1,6 +1,5 @@
 package com.mundoviventem.io.file_type_managers;
 
-import com.mundoviventem.io.FileManager;
 import com.mundoviventem.io.FileTypes;
 
 import java.util.ArrayList;
@@ -13,13 +12,13 @@ import java.util.HashMap;
 public class KeyValueFileByteManager extends FileTypeManager
 {
 
-    public static final int BYTE_MAX_SIZE       = 255;
-    public static final String SEPERATION_REGEX = "===";
+    public static final int BYTE_MAX_SIZE            = 255;
+    public static final String KVFB_SEPERATION_REGEX = "===";
 
     @Override
     public String getFileType()
     {
-        return FileTypes.KEY_VALUE_Byte;
+        return FileTypes.KEY_VALUE_BYTE;
     }
 
     @Override
@@ -29,7 +28,7 @@ public class KeyValueFileByteManager extends FileTypeManager
         ArrayList<Integer> idArrayList = new ArrayList<>();
 
         for (String line: content.split(System.lineSeparator())) {
-            String[] lineArr = line.split(SEPERATION_REGEX);
+            String[] lineArr = line.split(KVFB_SEPERATION_REGEX);
             // Validate that structure only consists of one key and one value
             if(lineArr.length != 2) {
                 return false;
@@ -49,9 +48,11 @@ public class KeyValueFileByteManager extends FileTypeManager
      *
      * @return HashMap<Byte, String>[]
      */
-    public ArrayList<HashMap<Byte, String>> getContent(String fileName)
+    public ArrayList<HashMap<Byte, String>> getContent(String fileName) throws Exception
     {
-        this.lint(fileName);
+        if(!this.lint(fileName)) {
+            throw new Exception("Linting of file '" + fileName + "' failed!");
+        }
         int byteCounter = 0;
 
         String content                               = this.getFileContent(fileName);
@@ -59,7 +60,7 @@ public class KeyValueFileByteManager extends FileTypeManager
         ArrayList<HashMap<Byte, String>> contentMaps = new ArrayList<>();
 
         for(String line: content.split(System.lineSeparator())) {
-            String[] lineArr = line.split(SEPERATION_REGEX);
+            String[] lineArr = line.split(KVFB_SEPERATION_REGEX);
 
             if(!(byteCounter < BYTE_MAX_SIZE)) {
                    contentMaps.add(contentMap);
