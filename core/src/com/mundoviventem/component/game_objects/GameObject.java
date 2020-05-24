@@ -1,4 +1,4 @@
-package com.mundoviventem.component;
+package com.mundoviventem.component.game_objects;
 
 import com.mundoviventem.component.core.BaseComponent;
 import com.mundoviventem.component.core.Transform;

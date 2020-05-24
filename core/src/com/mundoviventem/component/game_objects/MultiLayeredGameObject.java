@@ -1,4 +1,6 @@
-package com.mundoviventem.component;
+package com.mundoviventem.component.game_objects;
+
+import com.mundoviventem.component.game_objects.GameObject;
 
 import java.util.ArrayList;
 

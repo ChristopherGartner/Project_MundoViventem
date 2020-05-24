@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mundoviventem.component.EmptyGameObject;
+import com.mundoviventem.component.game_objects.EmptyGameObject;
 import com.mundoviventem.component.GameObjectManager;
 import com.mundoviventem.io.FileManager;
 import com.mundoviventem.io.file_type_managers.KeyValueFileManager;

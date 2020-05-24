@@ -1,5 +1,7 @@
 package com.mundoviventem.component;
 
+import com.mundoviventem.component.game_objects.GameObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

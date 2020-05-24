@@ -1,6 +1,6 @@
 package com.mundoviventem.component.core;
 
-import com.mundoviventem.component.GameObject;
+import com.mundoviventem.component.game_objects.GameObject;
 
 /**
  * Base class for components
