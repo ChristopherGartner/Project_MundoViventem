@@ -1,7 +1,5 @@
 package com.mundoviventem.component.game_objects;
 
-import com.mundoviventem.component.game_objects.GameObject;
-
 import java.util.ArrayList;
 
 /**
@@ -44,7 +42,7 @@ public abstract class MultiLayeredGameObject extends GameObject
     protected void updateSubGameObjects()
     {
         for (GameObject subGameObject: this.subComponents) {
-            subGameObject.update();
+            subGameObject.updateGameObject();
         }
     }
 

@@ -99,13 +99,7 @@ public abstract class GameObject
     public void updateGameObject()
     {
         this.updateComponents();
-        this.update();
     }
-
-    /**
-     * This method gets called once per tick. It should contain all the logic by the game object.
-     */
-    protected abstract void update();
 
     /**
      * Updates each components. This gets called once per tick

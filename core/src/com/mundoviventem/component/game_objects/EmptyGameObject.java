@@ -6,9 +6,4 @@ package com.mundoviventem.component.game_objects;
 public class EmptyGameObject extends GameObject
 {
 
-    @Override
-    protected void update()
-    {
-        System.out.println("YEA I GOT UPDATED!");
-    }
 }
