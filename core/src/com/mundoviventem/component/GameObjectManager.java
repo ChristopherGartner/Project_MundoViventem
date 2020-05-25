@@ -59,7 +59,7 @@ public class GameObjectManager
         this.instantiatedGameObjects.forEach((gameObject) -> {
             if(!gameObject.isGameObjectSleeping()) {
                 gameObject.updateGameObject();
-                System.out.println("Update successfully for GameObject " + gameObject.getGameObjectUUID());
+                System.out.println("Update successfully for GameObject with the name '" + gameObject.getName() + "' and the UUID '" + gameObject.getGameObjectUUID() + "'");
             }
         });
     }
