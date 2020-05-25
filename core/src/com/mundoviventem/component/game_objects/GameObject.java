@@ -4,25 +4,35 @@ import com.mundoviventem.component.core.BaseComponent;
 import com.mundoviventem.component.core.Transform;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * resembles implementation of Component pattern
  */
-public abstract class GameObject
+public class GameObject
 {
 
     private ArrayList<BaseComponent> components;
     private boolean isSleeping;
+    private UUID gameObjectUUID;
+    private String name;
 
     /**
-     * Initializes components list
+     * Initializes components list.
+     * Initial name of game object is always the uuid. Can be changed
+     * with "setName" method.
+     *
+     * @param uuid = UUID of the game object
      */
-    public GameObject()
+    public GameObject(UUID uuid)
     {
         this.components = new ArrayList<>();
 
         // Every game object has a dedicated transform instance
         this.components.add(new Transform());
+
+        this.setGameObjectUUID(uuid);
+        this.setName(uuid.toString());
     }
 
     /**
@@ -33,6 +43,46 @@ public abstract class GameObject
     public ArrayList<BaseComponent> getComponents()
     {
         return this.components;
+    }
+
+    /**
+     * Returns the UUID of the game object
+     *
+     * @return UUID
+     */
+    public UUID getGameObjectUUID()
+    {
+        return this.gameObjectUUID;
+    }
+
+    /**
+     * Changes the value of the uuid attribute of the game object
+     *
+     * @param uuid = The new UUID of the game object
+     */
+    public void setGameObjectUUID(UUID uuid)
+    {
+        this.gameObjectUUID = uuid;
+    }
+
+    /**
+     * Returns the name of the game object
+     *
+     * @return String
+     */
+    public String getName()
+    {
+        return this.name;
+    }
+
+    /**
+     * Sets the name of the game object
+     *
+     * @param name = Name of the game object
+     */
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     /**

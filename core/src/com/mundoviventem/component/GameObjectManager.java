@@ -2,8 +2,7 @@ package com.mundoviventem.component;
 
 import com.mundoviventem.component.game_objects.GameObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -11,22 +10,22 @@ import java.util.UUID;
  */
 public class GameObjectManager
 {
-    private HashMap<UUID, GameObject> instantiatedGameObjects;
+    private ArrayList<GameObject> instantiatedGameObjects;
 
     /**
      * Initializes game objects
      */
     public GameObjectManager()
     {
-        this.instantiatedGameObjects = new HashMap<>();
+        this.instantiatedGameObjects = new ArrayList<>();
     }
 
     /**
      * Returns all instantiated game objects
      *
-     * @return HashMap<UUID, GameObject>
+     * @return ArrayList<GameObject>
      */
-    public HashMap<UUID, GameObject> getInstantiatedGameObjects()
+    public ArrayList<GameObject> getInstantiatedGameObjects()
     {
         return this.instantiatedGameObjects;
     }
@@ -34,23 +33,22 @@ public class GameObjectManager
     /**
      * Removes GameObject bound to the given key
      *
-     * @param key = Key as UUID
+     * @param removeObjectUUID = uuid of the game object that should get removed
      */
-    public void removeInstantiatedGameObject(UUID key)
+    public void removeInstantiatedGameObject(UUID removeObjectUUID)
     {
-        this.instantiatedGameObjects.remove(key);
+        this.instantiatedGameObjects.removeIf(gameObject -> removeObjectUUID.equals(gameObject.getGameObjectUUID()));
     }
 
     /**
      * Adds the given GameObject to the list of instantiated game objects,
      * that get updated for each frame
      *
-     * @param key        = Key as UUID
      * @param gameObject = GameObject that should get updated each frame
      */
-    public void addInstantiatedGameObject(UUID key, GameObject gameObject)
+    public void addInstantiatedGameObject(GameObject gameObject)
     {
-        this.instantiatedGameObjects.put(key, gameObject);
+        this.instantiatedGameObjects.add(gameObject);
     }
 
     /**
@@ -58,14 +56,11 @@ public class GameObjectManager
      */
     public void updateInstantiatedGameObjects()
     {
-        for (Map.Entry<UUID, GameObject> entry : this.instantiatedGameObjects.entrySet()) {
-            UUID uuid             = entry.getKey();
-            GameObject gameObject = entry.getValue();
-
+        this.instantiatedGameObjects.forEach((gameObject) -> {
             if(!gameObject.isGameObjectSleeping()) {
                 gameObject.updateGameObject();
-                System.out.println("Update successfully for GameObject " + uuid);
+                System.out.println("Update successfully for GameObject " + gameObject.getGameObjectUUID());
             }
-        }
+        });
     }
 }

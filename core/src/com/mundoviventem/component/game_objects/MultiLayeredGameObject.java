@@ -1,11 +1,12 @@
 package com.mundoviventem.component.game_objects;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Base class for game objects that consist of other game objects
  */
-public abstract class MultiLayeredGameObject extends GameObject
+public class MultiLayeredGameObject extends GameObject
 {
 
     protected ArrayList<GameObject> subComponents;
@@ -13,9 +14,9 @@ public abstract class MultiLayeredGameObject extends GameObject
     /**
      * Initializes the sub component array list
      */
-    public MultiLayeredGameObject()
+    public MultiLayeredGameObject(UUID uuid)
     {
-        super();
+        super(uuid);
         this.subComponents = new ArrayList<>();
     }
 
@@ -30,10 +31,14 @@ public abstract class MultiLayeredGameObject extends GameObject
     }
 
     /**
-     * This method needs to get implemented in every daughter class, as
-     * the daughter should determine what the conditions of removing of the sub component are
+     * Removes sub component by given uuid
+     *
+     * @param removeObjectUUID = the UUID of the sub game object that should get removed
      */
-    public abstract void removeSubComponent();
+    public void removeSubComponent(UUID removeObjectUUID)
+    {
+        this.subComponents.removeIf(gameObject -> removeObjectUUID.equals(gameObject.getGameObjectUUID()));
+    }
 
     /**
      * If this method gets overwritten, it is important to keep the parent call.

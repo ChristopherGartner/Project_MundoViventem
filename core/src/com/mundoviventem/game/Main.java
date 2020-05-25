@@ -5,8 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mundoviventem.component.game_objects.EmptyGameObject;
 import com.mundoviventem.component.GameObjectManager;
+import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.FileManager;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
 import com.mundoviventem.texture.TextureRepository;
@@ -17,7 +17,7 @@ public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	GameObjectManager gameObjectManager;
-	EmptyGameObject emptyGameObject;
+	GameObject gameObject;
 	TextureRepository textureRepository;
 
 	public static String Project_Path;
@@ -27,8 +27,11 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		Main.Project_Path = FileManager.determineProjectPath();
 		gameObjectManager = new GameObjectManager();
-		emptyGameObject = new EmptyGameObject();
-		gameObjectManager.addInstantiatedGameObject(UUID.randomUUID(), emptyGameObject);
+
+		gameObject = new GameObject(UUID.randomUUID());
+		gameObject.setName("Hannibal Lecter");
+		gameObjectManager.addInstantiatedGameObject(gameObject);
+
 		textureRepository = new TextureRepository();
 		img = new Texture(textureRepository.getTexture("badlogic"));
 
