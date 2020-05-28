@@ -37,7 +37,12 @@ public class GameObjectManager
      */
     public void removeInstantiatedGameObject(UUID removeObjectUUID)
     {
-        this.instantiatedGameObjects.removeIf(gameObject -> removeObjectUUID.equals(gameObject.getGameObjectUUID()));
+        for (GameObject gameObject : this.getInstantiatedGameObjects()) {
+            if(gameObject.getGameObjectUUID().equals(removeObjectUUID)) {
+                gameObject.dispose();
+                this.instantiatedGameObjects.remove(gameObject);
+            }
+        }
     }
 
     /**

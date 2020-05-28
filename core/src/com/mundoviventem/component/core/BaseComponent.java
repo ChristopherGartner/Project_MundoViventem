@@ -1,6 +1,9 @@
 package com.mundoviventem.component.core;
 
+import com.badlogic.gdx.utils.Disposable;
 import com.mundoviventem.component.game_objects.GameObject;
+
+import java.util.ArrayList;
 
 /**
  * Base class for components
@@ -8,6 +11,22 @@ import com.mundoviventem.component.game_objects.GameObject;
 public abstract class BaseComponent
 {
     private GameObject gameObject;
+    private ArrayList<Disposable> disposableObjects = new ArrayList<>();
+
+    /**
+     * Method gets called when component gets bound to game object
+     */
+    public abstract void onEnable();
+
+    /**
+     * Method gets called when component gets unbound from game object
+     */
+    public abstract void onDisable();
+
+    /**
+     * Method gets called for each tick
+     */
+    public abstract void update();
 
     /**
      * Sets the game object the component gets bound to
@@ -30,18 +49,52 @@ public abstract class BaseComponent
     }
 
     /**
-     * Method gets called when component gets bound to game object
+     * Adds a new resource that should get disposed
+     *
+     * @param disposableResource = The new resource that should get registered
      */
-    public abstract void onEnable();
+    public void addDisposableResource(Disposable disposableResource)
+    {
+        this.disposableObjects.add(disposableResource);
+    }
 
     /**
-     * Method gets called when component gets unbound from game object
+     * Removes a registered object from the disposable resource list
+     *
+     * @param disposableResource = The object whose registration should be removed
      */
-    public abstract void onDisable();
+    public void removeDisposableResource(Object disposableResource)
+    {
+        this.disposableObjects.remove(disposableResource);
+    }
 
     /**
-     * Method gets called for each tick
+     * Returns the list of all registered resources that should get disposed
+     *
+     * @return ArrayList<Disposable>
      */
-    public abstract void update();
+    public ArrayList<Disposable> getDisposableObjects()
+    {
+        return this.disposableObjects;
+    }
 
+    /**
+     * Returns whether the component has disposable resources registered or not
+     *
+     * @return boolean
+     */
+    public boolean hasDisposableResources()
+    {
+        return this.disposableObjects.isEmpty();
+    }
+
+    /**
+     * Disposes all registered disposable resources
+     */
+    public void disposeResources()
+    {
+        for (Disposable disposable : this.disposableObjects) {
+            disposable.dispose();
+        }
+    }
 }

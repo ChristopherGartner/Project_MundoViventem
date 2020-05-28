@@ -190,4 +190,23 @@ public class GameObject
     {
         return this.isSleeping;
     }
+
+    /**
+     * Dispose method for game objects.
+     * Should get called every time a game object gets destroyed.
+     */
+    public void dispose()
+    {
+        for (BaseComponent component : this.getComponents()) {
+            if(component.hasDisposableResources()) {
+                component.disposeResources();
+            }
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "GameObject[name=]" + this.getName() + ";UUID=" + this.getGameObjectUUID() + "]";
+    }
 }
