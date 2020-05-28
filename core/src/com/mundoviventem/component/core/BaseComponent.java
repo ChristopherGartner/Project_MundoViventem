@@ -63,7 +63,7 @@ public abstract class BaseComponent
      *
      * @param disposableResource = The object whose registration should be removed
      */
-    public void removeDisposableResource(Object disposableResource)
+    public void removeDisposableResource(Disposable disposableResource)
     {
         this.disposableObjects.remove(disposableResource);
     }
