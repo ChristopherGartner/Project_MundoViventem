@@ -21,4 +21,13 @@ public class SpriteRenderer extends BaseComponent {
     {
         // TODO
     }
+
+    public void render()
+    {
+
+
+
+
+
+    }
 }

@@ -37,6 +37,10 @@ public class Main extends ApplicationAdapter {
 		gameObject.setName("Hannibal Lecter");
 		gameObjectManager.addInstantiatedGameObject(gameObject);
 
+		GameObject testimg = new GameObject(UUID.randomUUID());
+		testimg.setName("Test Image");
+		gameObjectManager.addInstantiatedGameObject(testimg);
+
 		world = new GameObject(UUID.randomUUID());
 		world.setName("World");
 		world.addComponent(new WorldComponent(new Vector2(100, 50)));
@@ -46,6 +50,12 @@ public class Main extends ApplicationAdapter {
 		img = new Texture(textureRepository.getTexture("badlogic"));
 
 		KeyValueFileByteManager keyValueFileManager = new KeyValueFileByteManager();
+
+
+
+		gameObjectManager.callRender();
+
+
 
 //		ArrayList<String> contentOfFile = new ArrayList<>();
 //		for (int i = 0; i < 1000; i++) {

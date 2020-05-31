@@ -1,5 +1,8 @@
 package com.mundoviventem.component;
 
+import com.mundoviventem.component.core.BaseComponent;
+import com.mundoviventem.component.core.SpriteRenderer;
+import com.mundoviventem.component.core.Transform;
 import com.mundoviventem.component.game_objects.GameObject;
 
 import java.util.ArrayList;
@@ -11,13 +14,16 @@ import java.util.UUID;
 public class GameObjectManager
 {
     private ArrayList<GameObject> instantiatedGameObjects;
+    private RenderManager renderManager;
 
     /**
      * Initializes game objects
      */
     public GameObjectManager()
     {
+
         this.instantiatedGameObjects = new ArrayList<>();
+        this.renderManager = new RenderManager(this);
     }
 
     /**
@@ -41,6 +47,7 @@ public class GameObjectManager
             if(gameObject.getGameObjectUUID().equals(removeObjectUUID)) {
                 gameObject.dispose();
                 this.instantiatedGameObjects.remove(gameObject);
+                this.renderManager.removeGameObject(gameObject);
             }
         }
     }
@@ -53,7 +60,9 @@ public class GameObjectManager
      */
     public void addInstantiatedGameObject(GameObject gameObject)
     {
+
         this.instantiatedGameObjects.add(gameObject);
+        this.renderManager.addGameObject(gameObject);
     }
 
     /**
@@ -67,5 +76,13 @@ public class GameObjectManager
                 System.out.println("Update successfully for GameObject with the name '" + gameObject.getName() + "' and the UUID '" + gameObject.getGameObjectUUID() + "'");
             }
         });
+    }
+
+    /**
+     * Passthrough method to call rendering
+     */
+
+    public void callRender(){
+        this.renderManager.renderObjects();
     }
 }
