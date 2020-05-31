@@ -16,6 +16,7 @@ public class GameObject
     private boolean isSleeping;
     private UUID gameObjectUUID;
     private String name;
+    private GameObjectState gameObjectState;
 
     /**
      * Initializes components list.
@@ -189,6 +190,34 @@ public class GameObject
     public boolean isGameObjectSleeping()
     {
         return this.isSleeping;
+    }
+
+    /**
+     * Returns the current game object state.
+     * A game object state resembles the current
+     * thing the game object does at this specific moment.
+     * Each game object can only have one specific state at
+     * a moment.
+     *
+     * @return GameObjectState
+     */
+    public GameObjectState getGameObjectState()
+    {
+        return this.gameObjectState;
+    }
+
+    /**
+     * Sets the game object state of this specific game object.
+     * A game object state resembles the current
+     * thing the game object does at this specific moment.
+     * Each game object can only have one specific state at
+     * a moment.
+     *
+     * @param gameObjectState = The new game object state of the game object
+     */
+    public void setState(GameObjectState gameObjectState)
+    {
+        this.gameObjectState = gameObjectState;
     }
 
     /**
