@@ -1,6 +1,6 @@
 package com.mundoviventem.texture;
 
-import com.mundoviventem.io.file_type_managers.KeyValueFileTextureManager;
+import com.mundoviventem.io.file_type_managers.KeyValueFileResourceManager;
 
 import java.util.HashMap;
 
@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class TextureRepository
 {
 
-    public static final String TEXTURES_FOLDER         = "textures\\";
+    public static final String TEXTURES_FOLDER         = "textures";
     public static final String TEXTURE_ALIAS_FILE_NAME = "files\\texture_aliases";
 
     private HashMap<String, String> textures;
@@ -20,7 +20,7 @@ public class TextureRepository
      */
     public TextureRepository()
     {
-        KeyValueFileTextureManager keyValueFileTextureManager = new KeyValueFileTextureManager();
+        KeyValueFileResourceManager keyValueFileTextureManager = new KeyValueFileResourceManager(TEXTURES_FOLDER);
         try {
             this.textures = keyValueFileTextureManager.getContent(TEXTURE_ALIAS_FILE_NAME);
         } catch (Exception exception) {
@@ -37,6 +37,6 @@ public class TextureRepository
      */
     public String getTexture(String alias)
     {
-        return TEXTURES_FOLDER + this.textures.get(alias);
+        return TEXTURES_FOLDER + "\\" + this.textures.get(alias);
     }
 }

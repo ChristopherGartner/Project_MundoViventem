@@ -149,6 +149,17 @@ public class GameObject
     }
 
     /**
+     * Returns whether the game object has the given component or not
+     *
+     * @param componentClass = The class of the component
+     * @return boolean
+     */
+    public boolean hasComponent(Class componentClass)
+    {
+        return this.getComponentFromClass(componentClass) != null;
+    }
+
+    /**
      * Calls all update method of the game objects.
      * This method shouldn't get overwritten for normal
      * update functionality adding. Use "update()" method
@@ -176,6 +187,7 @@ public class GameObject
      */
     public void setGameObjectAsleep()
     {
+        this.components.forEach((BaseComponent::gameObjectStartsSleeping));
         this.isSleeping = true;
     }
 

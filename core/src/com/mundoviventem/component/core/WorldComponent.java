@@ -57,4 +57,9 @@ public class WorldComponent extends BaseComponent
     {
         System.out.println("Successfully updated world");
     }
+
+    @Override
+    public void gameObjectStartsSleeping() {
+
+    }
 }

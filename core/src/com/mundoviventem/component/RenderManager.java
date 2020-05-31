@@ -16,7 +16,7 @@ import java.util.TreeMap;
 public class RenderManager {
 
     private GameObjectManager gameObjectManager;
-    private TreeMap<Integer, SpriteRenderer> renderSequence;
+    private TreeMap<Integer, SpriteRenderer> renderSequence = new TreeMap<>();
 
     /**
      * Link RenderManager to GameObjectManager

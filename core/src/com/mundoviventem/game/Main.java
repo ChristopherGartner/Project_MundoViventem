@@ -2,15 +2,19 @@ package com.mundoviventem.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.component.GameObjectManager;
+import com.mundoviventem.component.core.SoundManager;
 import com.mundoviventem.component.core.WorldComponent;
+import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.FileManager;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
+import com.mundoviventem.sound.SoundRepository;
 import com.mundoviventem.texture.TextureRepository;
 
 import java.util.UUID;
@@ -22,8 +26,10 @@ public class Main extends ApplicationAdapter {
 
 	GameObject gameObject;
 	GameObject world;
+	GameObject soundObject;
 
 	TextureRepository textureRepository;
+	SoundRepository soundRepository;
 
 	public static String Project_Path;
 
@@ -49,6 +55,17 @@ public class Main extends ApplicationAdapter {
 
 		textureRepository = new TextureRepository();
 		img = new Texture(textureRepository.getTexture("badlogic"));
+
+		soundRepository = new SoundRepository();
+		Sound sound = Gdx.audio.newSound(Gdx.files.internal(soundRepository.getSound("test_song")));
+
+		soundObject = new GameObject(UUID.randomUUID());
+		soundObject.setName("Sound Object");
+		SoundManager soundManager = new SoundManager();
+		soundObject.addComponent(soundManager);
+		((SoundManager) soundObject.getComponentFromClass(SoundManager.class)).registerNewSound(sound, "Test_Registration", new SoundConfiguration());
+		((SoundManager) soundObject.getComponentFromClass(SoundManager.class)).getSoundRegistrations().forEach((soundRegistration -> {soundRegistration.setPlaying(true);}));
+		gameObjectManager.addInstantiatedGameObject(soundObject);
 
 		KeyValueFileByteManager keyValueFileManager = new KeyValueFileByteManager();
 
@@ -78,7 +95,6 @@ public class Main extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
-
 		gameObjectManager.updateInstantiatedGameObjects();
 	}
 	
