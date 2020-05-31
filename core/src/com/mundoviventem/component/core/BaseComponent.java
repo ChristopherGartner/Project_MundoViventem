@@ -97,4 +97,9 @@ public abstract class BaseComponent
             disposable.dispose();
         }
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

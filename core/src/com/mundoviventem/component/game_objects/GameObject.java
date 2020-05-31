@@ -106,9 +106,16 @@ public class GameObject
      */
     public void addComponent(BaseComponent component)
     {
-        component.setGameObject(this);
-        this.components.add(component);
-        component.onEnable();
+        BaseComponent componentInGameObject = this.getComponentFromClass(component.getClass());
+
+        if(componentInGameObject == null) {
+            component.setGameObject(this);
+            this.components.add(component);
+            component.onEnable();
+        } else {
+            System.err.println("Adding of component '" + component + "' isn't possible for game object "
+            + this + ", as the game object already has an instance of the given component.");
+        }
     }
 
     /**
@@ -236,6 +243,14 @@ public class GameObject
     @Override
     public String toString()
     {
-        return "GameObject[name=]" + this.getName() + ";UUID=" + this.getGameObjectUUID() + "]";
+
+        StringBuilder components = new StringBuilder();
+
+        for (BaseComponent component : this.getComponents()) {
+            components.append(component);
+            components.append("; ");
+        }
+
+        return "GameObject[name=" + this.getName() + ";UUID=" + this.getGameObjectUUID() + ";Components=[" + components + "]" + "]";
     }
 }
