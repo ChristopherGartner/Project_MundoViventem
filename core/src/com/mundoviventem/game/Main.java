@@ -40,6 +40,7 @@ public class Main extends ApplicationAdapter {
 		world = new GameObject(UUID.randomUUID());
 		world.setName("World");
 		world.addComponent(new WorldComponent(new Vector2(100, 50)));
+		world.addComponent(new WorldComponent(new Vector2(20, 30)));
 		gameObjectManager.addInstantiatedGameObject(world);
 
 		textureRepository = new TextureRepository();
