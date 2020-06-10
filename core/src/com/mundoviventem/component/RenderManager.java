@@ -26,6 +26,7 @@ public class RenderManager {
     public RenderManager(GameObjectManager gom) {
 
         gameObjectManager = gom;
+        renderSequence = new TreeMap<>();
     }
 
     /**
@@ -38,7 +39,20 @@ public class RenderManager {
         if(comp == null) return;
         SpriteRenderer renderer = (SpriteRenderer) comp;
         Transform trnsfrm = (Transform) go.getComponentFromClass(Transform.class);
-        renderSequence.put(trnsfrm.getBackgroundLevel(), renderer);
+        Integer level = trnsfrm.getBackgroundLevel();
+
+        while(true){
+            if(!renderSequence.containsKey(level)){
+                break;
+            } else {
+                if(level.intValue() == Integer.MAX_VALUE) throw new RuntimeException("Cannot insert spriteRenderer" +
+                        " from GameObject " + go.getName() + " at level " + trnsfrm.getBackgroundLevel() +
+                        ", all following levels are already in use!");
+                level = new Integer(level.intValue() + 1);
+            }
+        }
+
+        renderSequence.put(level, renderer);
     }
 
     /**
