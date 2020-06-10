@@ -1,8 +1,11 @@
 package com.mundoviventem.component;
 
 import com.mundoviventem.component.core.BaseComponent;
+import com.mundoviventem.component.core.SoundManager;
 import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.core.Transform;
+import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
+import com.mundoviventem.component.core.sound_manager.SoundRegistration;
 import com.mundoviventem.component.game_objects.GameObject;
 
 import java.util.ArrayList;
@@ -60,13 +63,38 @@ public class GameObjectManager
      */
     public void addInstantiatedGameObject(GameObject gameObject)
     {
-
         this.instantiatedGameObjects.add(gameObject);
         this.renderManager.addGameObject(gameObject);
     }
 
     /**
-     * Calls update method for all instantiated game objects
+     * Handles sound playing for the game objects
+     */
+    private void playSounds()
+    {
+        this.instantiatedGameObjects.forEach((gameObject -> {
+            if(!gameObject.isGameObjectSleeping()) {
+                if(gameObject.hasComponent(SoundManager.class)) {
+                    SoundManager soundManager = (SoundManager) gameObject.getComponentFromClass(SoundManager.class);
+                    for (SoundRegistration soundRegistration : soundManager.getSoundRegistrations()
+                         ) {
+                        // If sound is playing, but the playing change wasn't performed yet
+                        if(soundRegistration.isPlaying() && !(soundRegistration.isPerformedPlayingChange())) {
+                            soundManager.playSound(soundRegistration);
+                            soundRegistration.setPerformedPlayingChange(true);
+                        // If sound isn't playing, but the playing change wasn't performed yet
+                        } else if(!(soundRegistration.isPlaying()) && !(soundRegistration.isPerformedPlayingChange())) {
+                            soundRegistration.getSound().stop();
+                            soundRegistration.setPerformedPlayingChange(true);
+                        }
+                    }
+                }
+            }
+        }));
+    }
+
+    /**
+     * performs updates per tick
      */
     public void updateInstantiatedGameObjects()
     {
@@ -76,6 +104,8 @@ public class GameObjectManager
                 System.out.println("Update successfully for GameObject with the name '" + gameObject.getName() + "' and the UUID '" + gameObject.getGameObjectUUID() + "'");
             }
         });
+
+        this.playSounds();
     }
 
     /**

@@ -43,6 +43,12 @@ public class SpriteRenderer extends BaseComponent {
     }
 
 
+    @Override
+    public void gameObjectStartsSleeping()
+    {
+        // TODO
+    }
+
     public void render()
     {
 

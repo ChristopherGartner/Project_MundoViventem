@@ -1,6 +1,7 @@
 package com.mundoviventem.component.core;
 
 import com.badlogic.gdx.audio.Sound;
+import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.core.sound_manager.SoundRegistration;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class SoundManager extends BaseComponent
 {
 
-    private ArrayList<SoundRegistration> soundRegistrations;
+    private ArrayList<SoundRegistration> soundRegistrations = new ArrayList<>();
 
     @Override
     public void onEnable()
@@ -32,18 +33,46 @@ public class SoundManager extends BaseComponent
 
     }
 
+    @Override
+    public void gameObjectStartsSleeping()
+    {
+        this.soundRegistrations.forEach((soundRegistration -> {
+            soundRegistration.getSound().stop();
+        }));
+    }
+
     /**
      * Registers a new sound registration
      *
      * @param sound = the sound that should be registered as sound registration
+     * @param name  = the name of the sound registration (should be unique. Otherwise errors can occur)
+     * @param soundConfiguration = the sound configuration
      */
-    public void registerNewSound(Sound sound)
+    public void registerNewSound(Sound sound, String name, SoundConfiguration soundConfiguration)
     {
         SoundRegistration soundRegistration = new SoundRegistration();
         soundRegistration.setSound(sound);
+        soundRegistration.setName(name);
+        soundRegistration.setSoundConfiguration(soundConfiguration);
 
         this.addDisposableResource(soundRegistration);
         this.soundRegistrations.add(soundRegistration);
+    }
+
+    /**
+     * Plays the sound with the given configuration
+     *
+     * @param soundRegistration = The sound registration holding the sound and sound configuration
+     */
+    public void playSound(SoundRegistration soundRegistration)
+    {
+
+        long id = soundRegistration.getSound().play();
+        soundRegistration.setSoundId(id);
+        soundRegistration.getSound().setLooping(id, soundRegistration.getSoundConfiguration().isLooping());
+        soundRegistration.getSound().setVolume(id, soundRegistration.getSoundConfiguration().getVolume());
+        soundRegistration.getSound().setPan(id, soundRegistration.getSoundConfiguration().getPan(), soundRegistration.getSoundConfiguration().getVolume());
+        soundRegistration.getSound().setPitch(id, soundRegistration.getSoundConfiguration().getPitch());
     }
 
     /**
@@ -54,6 +83,23 @@ public class SoundManager extends BaseComponent
     public ArrayList<SoundRegistration> getSoundRegistrations()
     {
         return this.soundRegistrations;
+    }
+
+    /**
+     * Returns specific sound registration. If registration cannot be found, null gets returned
+     *
+     * @param name = The name of the specific sound registration
+     *
+     * @return SoundRegistration
+     */
+    public SoundRegistration getSoundRegistration(String name)
+    {
+        for (SoundRegistration soundRegistration : this.getSoundRegistrations()) {
+            if (soundRegistration.getName().equals(name)) {
+                return soundRegistration;
+            }
+        }
+        return null;
     }
 
     /**

@@ -29,6 +29,11 @@ public abstract class BaseComponent
     public abstract void update();
 
     /**
+     * Gets called when the game object starts to sleep
+     */
+    public abstract void gameObjectStartsSleeping();
+
+    /**
      * Sets the game object the component gets bound to
      *
      * @param gameObject = Game object, which owns the component instance
