@@ -22,6 +22,7 @@ public class SpriteRenderer extends BaseComponent {
     private boolean useDefaultBatch = true;
     private ShaderProgram shader;
     private SpriteBatch batch;
+    private long c = 0;
 
     public SpriteRenderer(Transform transformComponent){
         trnsfrmCmp = transformComponent;
@@ -134,8 +135,9 @@ public class SpriteRenderer extends BaseComponent {
     public void render()
     {
         batch.begin();
-        if(!useDefaultBatch) {
-            batch.setShader(shader);
+        if(!useDefaultBatch){
+            shader.setUniformf("u_time", (float)c);
+            c++;
         }
         for(Map.Entry<Integer, ArrayList<TextureList>> entry : renderSequence.entrySet()){
             for(TextureList tl : entry.getValue()){

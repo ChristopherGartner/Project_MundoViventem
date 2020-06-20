@@ -10,13 +10,14 @@ uniform sampler2D u_texture;
 //uniform float u_percent;
 //uniform vec2 u_resolution;  // Canvas size (width,height)
 //uniform vec2 u_mouse;       // mouse position in screen pixels
-//uniform float u_time;       // Time in seconds since load
+uniform float u_time;       // Time in seconds since load
 
 
 void main(void)
 {
     vec4 localColor = v_color * texture2D(u_texture, v_texCoords);
 
+    float time = 0.05f * u_time;
     //float mediumOfRgbChannels = (localColor.r + localColor.g + localColor.b) / 3.0;
     /*
     float offsetLight = 0.1;
@@ -36,7 +37,12 @@ void main(void)
     //} else {
     //   finalColor = vec4(localColor.r-0.5, localColor.g-0.5, localColor.b-0.5, localColor.a);
     //}
-    gl_FragColor = localColor * vec4(0.7f, 0.2f, 0.8f, 1.0f);
+    vec3 rainbow = vec3((sin(time) + 1.0f )/ 2.0f,
+    (sin(time-3.1415f*2.0f/3.0f)+1.0f)/2.0f,
+    (sin(time+3.1415f*2.0f/3.0f)+1.0f)/2.0f);
+
+
+    gl_FragColor = localColor * vec4(rainbow, 1.0f);
 
         /*
     	vec2 position = ( gl_FragCoord.xy / u_resolution.xy ) + u_mouse / 4.0;

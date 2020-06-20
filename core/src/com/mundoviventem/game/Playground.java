@@ -50,7 +50,7 @@ public class Playground
         ManagerMall.getRenderManager().addGameObject(testimg);
         ShaderProgram.pedantic = false;
         ShaderProgram testShader = new ShaderProgram(new FileHandle(new File(Main.Project_Path + "\\core\\assets\\shaders\\test_directory\\shader.vert")),
-                new FileHandle(new File(Main.Project_Path + "\\core\\assets\\shaders\\test_directory\\test.frag")));
+                new FileHandle(new File(Main.Project_Path + "\\core\\assets\\shaders\\test_directory\\shader.frag")));
         TextureList a = new TextureList("test_img", new Vector2(150,150));
         ArrayList<Vector2> al = new ArrayList<>();
         al.add(new Vector2(100,100));
