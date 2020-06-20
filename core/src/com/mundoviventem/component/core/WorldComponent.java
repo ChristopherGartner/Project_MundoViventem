@@ -55,7 +55,7 @@ public class WorldComponent extends BaseComponent
     @Override
     public void update()
     {
-        System.out.println("Successfully updated world");
+        //System.out.println("Successfully updated world");
     }
 
     @Override

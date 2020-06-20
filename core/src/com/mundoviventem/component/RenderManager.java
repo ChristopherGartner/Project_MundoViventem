@@ -74,7 +74,6 @@ public class RenderManager {
 
         for(Map.Entry<Integer, ArrayList<SpriteRenderer>> entry : renderSequence.entrySet()){
             for(SpriteRenderer sr : entry.getValue()){
-                System.out.println(sr.useDefBatch());
                 sr.render();
             }
         }

@@ -12,7 +12,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.game.Main;
 import com.mundoviventem.render.TextureList;
 
-import javax.xml.soap.Text;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -149,7 +148,6 @@ public class SpriteRenderer extends BaseComponent {
                 String texPath = Main.textureRepository.getTexture(tl.getTexture());
                 Texture tex = new Texture(texPath);
 
-                System.out.println("Drawing " + tl.getTexture());
                 for(Vector2 coord : tl.getCoordinates()){
                     tex.bind(0);
                     batch.draw(tex, coord.x, coord.y);

@@ -19,6 +19,7 @@ import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.FileManager;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
+import com.mundoviventem.render.ShaderHandler;
 import com.mundoviventem.render.TextureList;
 import com.mundoviventem.sound.SoundRepository;
 import com.mundoviventem.texture.TextureRepository;
@@ -47,7 +48,8 @@ public class Main extends ApplicationAdapter {
 		gameObjectManager = new GameObjectManager();
 		textureRepository = new TextureRepository();
 
-
+		ShaderHandler sh = new ShaderHandler();
+		sh.readShaders(Project_Path + "\\core\\assets\\shaders\\test_directory");
 
 
 		GameObject testimg = new GameObject(UUID.randomUUID());
@@ -58,8 +60,8 @@ public class Main extends ApplicationAdapter {
 		testimg.addComponent(sr);
 		gameObjectManager.getRenderManager().addGameObject(testimg);
 		ShaderProgram.pedantic = false;
-		ShaderProgram testShader = new ShaderProgram(new FileHandle(new File("C:\\Users\\Paul\\IdeaProjects\\Project_MundoViventem\\core\\assets\\shaders\\test_directory\\shader.vert")),
-				new FileHandle(new File("C:\\Users\\Paul\\IdeaProjects\\Project_MundoViventem\\core\\assets\\shaders\\test_directory\\test.frag")));
+		ShaderProgram testShader = new ShaderProgram(new FileHandle(new File(Project_Path + "\\core\\assets\\shaders\\test_directory\\shader.vert")),
+				new FileHandle(new File(Project_Path + "\\core\\assets\\shaders\\test_directory\\test.frag")));
 		TextureList a = new TextureList("test_img", new Vector2(150,150));
 		ArrayList<Vector2> al = new ArrayList<>();
 		al.add(new Vector2(100,100));
