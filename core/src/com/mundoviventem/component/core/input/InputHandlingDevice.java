@@ -2,6 +2,7 @@ package com.mundoviventem.component.core.input;
 
 import com.badlogic.gdx.InputProcessor;
 import com.mundoviventem.game.ManagerMall;
+import com.mundoviventem.util.Printer;
 
 public class InputHandlingDevice implements InputProcessor
 {
@@ -12,7 +13,7 @@ public class InputHandlingDevice implements InputProcessor
 
         if(keyActionBinding != null) {
             keyActionBinding.setIsActive(true);
-            System.out.println("Current Action: " + keyActionBinding.getAction());
+            Printer.print("Current Action: " + keyActionBinding.getAction(), Printer.Printing_State.RAW);
         }
         return false;
     }
@@ -24,7 +25,7 @@ public class InputHandlingDevice implements InputProcessor
 
         if(keyActionBinding != null) {
             keyActionBinding.setIsActive(false);
-            System.out.println("Ending Action: " + keyActionBinding.getAction());
+            Printer.print("Ending Action: " + keyActionBinding.getAction(), Printer.Printing_State.RAW);
         }
 
         return false;

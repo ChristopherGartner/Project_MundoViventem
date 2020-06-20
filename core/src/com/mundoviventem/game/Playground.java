@@ -15,6 +15,7 @@ import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
 import com.mundoviventem.render.TextureList;
+import com.mundoviventem.util.Printer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -131,10 +132,10 @@ public class Playground
         for(KeyActionBinding keyActionBinding : keyActionBindings) {
             if(keyActionBinding.isActive()) {
                 if(keyActionBinding.getAction().equals("Leon von hinten nehmen")) {
-                    System.out.println("(Action: Leon von hinten nehmen) Leon schreit wie eine wild gewordene Stute!");
+                    Printer.print("(Action: Leon von hinten nehmen) Leon schreit wie eine wild gewordene Stute!", Printer.Printing_State.DETAILED);
                 }
                 if(keyActionBinding.getAction().equals("Leon kastrieren")) {
-                    System.out.println("(Action: Leon kastrieren) FATAL_ERROR - NULL_POINTER_EXCEPTION: Kein Schwanz gefunden!");
+                    Printer.print("(Action: Leon kastrieren) FATAL_ERROR - NULL_POINTER_EXCEPTION: Kein Schwanz gefunden!", Printer.Printing_State.DETAILED);
                 }
             }
         }
