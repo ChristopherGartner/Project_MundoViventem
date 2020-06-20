@@ -65,13 +65,13 @@ public class Playground
 
 
         GameObject huso = new GameObject(UUID.randomUUID());
-        huso.setName("Hurensohn");
+        huso.setName("Guter Mann");
         ManagerMall.getGameObjectManager().addInstantiatedGameObject(huso);
         huso.getTransformComponent().setBackgroundLevel(1);
         SpriteRenderer huso_sr = new SpriteRenderer(huso.getTransformComponent(), testShader);
         huso.addComponent(huso_sr);
         ManagerMall.getRenderManager().addGameObject(huso);
-        huso_sr.addTexture("test_img", 3, new Vector2(300,300));
+        huso_sr.addTexture("hitler", 3, new Vector2(300,300));
 
 
 
