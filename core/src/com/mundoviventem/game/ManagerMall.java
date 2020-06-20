@@ -20,31 +20,61 @@ public class ManagerMall
     private static TextureRepository textureRepository = new TextureRepository();
     private static SoundRepository soundRepository     = new SoundRepository();
 
+    /**
+     * Returns the instance of the RenderManager
+     *
+     * @return RenderManager
+     */
     public static RenderManager getRenderManager()
     {
         return ManagerMall.renderManager;
     }
 
+    /**
+     * Returns the instance of the DisposingManager
+     *
+     * @return DisposingManager
+     */
     public static DisposingManager getDisposingManager()
     {
         return ManagerMall.disposingManager;
     }
 
+    /**
+     * Returns the instance of the GameObjectManager
+     *
+     * @return GameObjectManager
+     */
     public static GameObjectManager getGameObjectManager()
     {
         return ManagerMall.gameObjectManager;
     }
 
+    /**
+     * Returns the instance of the ShaderManager
+     *
+     * @return ShaderManager
+     */
     public static ShaderManager getShaderManager()
     {
         return ManagerMall.shaderManager;
     }
 
+    /**
+     * Returns the instance of the TextureRepository
+     *
+     * @return TextureRepository
+     */
     public static TextureRepository getTextureRepository()
     {
         return ManagerMall.textureRepository;
     }
 
+    /**
+     * Returns the instance of the SoundRepository
+     *
+     * @return SoundRepository
+     */
     public static SoundRepository getSoundRepository()
     {
         return ManagerMall.soundRepository;
