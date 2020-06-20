@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
+import com.mundoviventem.component.core.InputHandler;
 import com.mundoviventem.component.core.SoundManager;
 import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.core.WorldComponent;
@@ -27,6 +28,7 @@ public class Playground
 
     GameObject world;
     GameObject soundObject;
+    GameObject inputObject;
 
     public Playground()
     {
@@ -63,7 +65,6 @@ public class Playground
         sr.addTexture(b, 1);
 
 
-
         GameObject huso = new GameObject(UUID.randomUUID());
         huso.setName("Guter Mann");
         ManagerMall.getGameObjectManager().addInstantiatedGameObject(huso);
@@ -74,6 +75,11 @@ public class Playground
         huso_sr.addTexture("hitler", 3, new Vector2(300,300));
 
 
+        inputObject = new GameObject(UUID.randomUUID());
+        inputObject.setName("Leon's Nightmare");
+        ManagerMall.getGameObjectManager().addInstantiatedGameObject(inputObject);
+        InputHandler inputHandler = new InputHandler();
+        inputObject.addComponent(inputHandler);
 
 
         world = new GameObject(UUID.randomUUID());
@@ -81,7 +87,6 @@ public class Playground
         world.addComponent(new WorldComponent(new Vector2(10000, 5000)));
         world.addComponent(new WorldComponent(new Vector2(20, 30)));
         ManagerMall.getGameObjectManager().addInstantiatedGameObject(world);
-
 
 
         Sound sound = Gdx.audio.newSound(Gdx.files.internal(ManagerMall.getSoundRepository().getSound("test_song")));
