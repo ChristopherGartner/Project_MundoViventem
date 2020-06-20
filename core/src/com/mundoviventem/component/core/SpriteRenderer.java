@@ -145,8 +145,7 @@ public class SpriteRenderer extends BaseComponent {
         for(Map.Entry<Integer, ArrayList<TextureList>> entry : renderSequence.entrySet()){
             for(TextureList tl : entry.getValue()){
                 //TODO have this handled by a Texture Handler
-                String texPath = Main.textureRepository.getTexture(tl.getTexture());
-                Texture tex = new Texture(texPath);
+                Texture tex = Main.textureRepository.getTexture(tl.getTexture());
 
                 for(Vector2 coord : tl.getCoordinates()){
                     tex.bind(0);

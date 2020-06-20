@@ -5,13 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.component.GameObjectManager;
-import com.mundoviventem.component.RenderManager;
 import com.mundoviventem.component.core.SoundManager;
 import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.core.WorldComponent;
@@ -69,8 +66,6 @@ public class Main extends ApplicationAdapter {
 		al.add(new Vector2(100,1000));
 		al.add(new Vector2(1000,1000));
 		TextureList b = new TextureList("badlogic", al);
-
-
 
 		sr.addTexture(a, 2);
 		sr.addTexture(b, 1);
@@ -141,5 +136,6 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		textureRepository.dispose();
 	}
 }
