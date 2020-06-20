@@ -3,9 +3,12 @@ package com.mundoviventem.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.component.GameObjectManager;
 import com.mundoviventem.component.RenderManager;
@@ -20,6 +23,7 @@ import com.mundoviventem.render.TextureList;
 import com.mundoviventem.sound.SoundRepository;
 import com.mundoviventem.texture.TextureRepository;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -49,10 +53,13 @@ public class Main extends ApplicationAdapter {
 		GameObject testimg = new GameObject(UUID.randomUUID());
 		testimg.setName("Test Image");
 		gameObjectManager.addInstantiatedGameObject(testimg);
+		testimg.getTransformComponent().setBackgroundLevel(0);
 		SpriteRenderer sr = new SpriteRenderer(testimg.getTransformComponent());
 		testimg.addComponent(sr);
 		gameObjectManager.getRenderManager().addGameObject(testimg);
-
+		ShaderProgram.pedantic = false;
+		ShaderProgram testShader = new ShaderProgram(new FileHandle(new File("C:\\Users\\Paul\\IdeaProjects\\Project_MundoViventem\\core\\assets\\shaders\\test_directory\\shader.vert")),
+				new FileHandle(new File("C:\\Users\\Paul\\IdeaProjects\\Project_MundoViventem\\core\\assets\\shaders\\test_directory\\test.frag")));
 		TextureList a = new TextureList("test_img", new Vector2(150,150));
 		ArrayList<Vector2> al = new ArrayList<>();
 		al.add(new Vector2(100,100));
@@ -61,15 +68,21 @@ public class Main extends ApplicationAdapter {
 		al.add(new Vector2(1000,1000));
 		TextureList b = new TextureList("badlogic", al);
 
-		sr.addTexture("test_img", 3, new Vector2(300, 300));
+
+
 		sr.addTexture(a, 2);
 		sr.addTexture(b, 1);
 
 
 
-
-
-
+		GameObject huso = new GameObject(UUID.randomUUID());
+		huso.setName("Hurensohn");
+		gameObjectManager.addInstantiatedGameObject(huso);
+		huso.getTransformComponent().setBackgroundLevel(1);
+		SpriteRenderer huso_sr = new SpriteRenderer(huso.getTransformComponent(), testShader);
+		huso.addComponent(huso_sr);
+		gameObjectManager.getRenderManager().addGameObject(huso);
+		huso_sr.addTexture("test_img", 3, new Vector2(300,300));
 
 
 
@@ -100,6 +113,8 @@ public class Main extends ApplicationAdapter {
 
 
 
+
+
 //		ArrayList<String> contentOfFile = new ArrayList<>();
 //		for (int i = 0; i < 1000; i++) {
 //			contentOfFile.add(i + "===Paul_Ist_Gay");
@@ -115,7 +130,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		gameObjectManager.callRender();
 		gameObjectManager.updateInstantiatedGameObjects();

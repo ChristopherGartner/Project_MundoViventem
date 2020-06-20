@@ -1,8 +1,13 @@
 package com.mundoviventem.component.core;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.game.Main;
 import com.mundoviventem.render.TextureList;
@@ -18,7 +23,7 @@ import java.util.TreeMap;
  */
 public class SpriteRenderer extends BaseComponent {
 
-    private static TreeMap<Integer, ArrayList<TextureList>> renderSequence = new TreeMap<>();
+    private TreeMap<Integer, ArrayList<TextureList>> renderSequence = new TreeMap<>();
     private Transform trnsfrmCmp;
     private boolean useDefaultBatch = true;
     private ShaderProgram shader;
@@ -40,8 +45,20 @@ public class SpriteRenderer extends BaseComponent {
         trnsfrmCmp = transformComponent;
         useDefaultBatch = false;
         shader = batchShader;
-        batch = new SpriteBatch();
+        batch = new SpriteBatch(1000, shader);
         batch.setShader(shader);
+        /*
+        batch.setProjectionMatrix(new Matrix4(new float[]{
+                1.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+        }));
+        shader.begin();
+        shader.setUniformf("u_resolution",(float)2000,(float)1500);
+        shader.end();
+        */
+
     }
 
     @Override
@@ -123,6 +140,9 @@ public class SpriteRenderer extends BaseComponent {
     public void render()
     {
         batch.begin();
+        if(!useDefaultBatch) {
+            batch.setShader(shader);
+        }
         for(Map.Entry<Integer, ArrayList<TextureList>> entry : renderSequence.entrySet()){
             for(TextureList tl : entry.getValue()){
                 //TODO have this handled by a Texture Handler
@@ -131,6 +151,7 @@ public class SpriteRenderer extends BaseComponent {
 
                 System.out.println("Drawing " + tl.getTexture());
                 for(Vector2 coord : tl.getCoordinates()){
+                    tex.bind(0);
                     batch.draw(tex, coord.x, coord.y);
                 }
             }

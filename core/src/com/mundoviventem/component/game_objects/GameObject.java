@@ -30,7 +30,7 @@ public class GameObject
         this.components = new ArrayList<>();
 
         // Every game object has a dedicated transform instance
-        this.components.add(new Transform());
+        this.addComponent(new Transform());
 
         this.setGameObjectUUID(uuid);
         this.setName(uuid.toString());
