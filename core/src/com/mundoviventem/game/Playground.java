@@ -10,6 +10,7 @@ import com.mundoviventem.component.core.InputHandler;
 import com.mundoviventem.component.core.SoundManager;
 import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.core.WorldComponent;
+import com.mundoviventem.component.core.input.KeyActionBinding;
 import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
@@ -124,6 +125,19 @@ public class Playground
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         ManagerMall.getGameObjectManager().callRender();
         ManagerMall.getGameObjectManager().updateInstantiatedGameObjects();
+
+        ArrayList<KeyActionBinding> keyActionBindings = ManagerMall.getKeyActionBindingRepository().getKeyActionBindings();
+
+        for(KeyActionBinding keyActionBinding : keyActionBindings) {
+            if(keyActionBinding.isActive()) {
+                if(keyActionBinding.getAction().equals("Leon von hinten nehmen")) {
+                    System.out.println("(Action: Leon von hinten nehmen) Leon schreit wie eine wild gewordene Stute!");
+                }
+                if(keyActionBinding.getAction().equals("Leon kastrieren")) {
+                    System.out.println("(Action: Leon kastrieren) FATAL_ERROR - NULL_POINTER_EXCEPTION: Kein Schwanz gefunden!");
+                }
+            }
+        }
     }
 
 }

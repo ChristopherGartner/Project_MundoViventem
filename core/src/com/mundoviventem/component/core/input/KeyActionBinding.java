@@ -9,6 +9,7 @@ public class KeyActionBinding
     private int key;
     private String action;
     private String gameState;
+    private boolean isActive;
 
     /**
      * Returns the keyboard key
@@ -68,5 +69,25 @@ public class KeyActionBinding
     public void setGameState(String gameState)
     {
         this.gameState = gameState;
+    }
+
+    /**
+     * Returns whether the current action binding is active or not
+     *
+     * @return boolean
+     */
+    public boolean isActive()
+    {
+        return this.isActive;
+    }
+
+    /**
+     * Sets whether the current action binding is active or not
+     *
+     * @param isActive = whether the action binding is active or not
+     */
+    public void setIsActive(boolean isActive)
+    {
+        this.isActive = isActive;
     }
 }

@@ -11,13 +11,22 @@ public class InputHandlingDevice implements InputProcessor
         KeyActionBinding keyActionBinding = ManagerMall.getKeyActionBindingRepository().getKeyActionBindingByKey(keycode);
 
         if(keyActionBinding != null) {
+            keyActionBinding.setIsActive(true);
             System.out.println("Current Action: " + keyActionBinding.getAction());
         }
         return false;
     }
 
     @Override
-    public boolean keyUp(int keycode) {
+    public boolean keyUp(int keycode)
+    {
+        KeyActionBinding keyActionBinding = ManagerMall.getKeyActionBindingRepository().getKeyActionBindingByKey(keycode);
+
+        if(keyActionBinding != null) {
+            keyActionBinding.setIsActive(false);
+            System.out.println("Ending Action: " + keyActionBinding.getAction());
+        }
+
         return false;
     }
 
