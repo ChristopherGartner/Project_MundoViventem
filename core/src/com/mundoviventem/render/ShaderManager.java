@@ -2,7 +2,7 @@ package com.mundoviventem.render;
 
 import java.io.File;
 
-public class ShaderHandler {
+public class ShaderManager {
 
     public void readShaders(String path){
         File dir = new File(path);

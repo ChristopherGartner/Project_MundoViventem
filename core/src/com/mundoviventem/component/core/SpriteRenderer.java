@@ -1,19 +1,14 @@
 package com.mundoviventem.component.core;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.game.Main;
+import com.mundoviventem.game.ManagerMall;
 import com.mundoviventem.render.TextureList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -30,7 +25,7 @@ public class SpriteRenderer extends BaseComponent {
 
     public SpriteRenderer(Transform transformComponent){
         trnsfrmCmp = transformComponent;
-        batch = Main.batch;
+        batch = ManagerMall.getRenderManager().getSpriteBatch();
     }
 
     /**
@@ -145,7 +140,7 @@ public class SpriteRenderer extends BaseComponent {
         for(Map.Entry<Integer, ArrayList<TextureList>> entry : renderSequence.entrySet()){
             for(TextureList tl : entry.getValue()){
                 //TODO have this handled by a Texture Handler
-                Texture tex = Main.textureRepository.getTexture(tl.getTexture());
+                Texture tex = ManagerMall.getTextureRepository().getTexture(tl.getTexture());
 
                 for(Vector2 coord : tl.getCoordinates()){
                     tex.bind(0);

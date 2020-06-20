@@ -1,5 +1,7 @@
 package com.mundoviventem.component;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
 import com.mundoviventem.component.core.BaseComponent;
 import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.core.Transform;
@@ -7,26 +9,40 @@ import com.mundoviventem.component.game_objects.GameObject;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 
 /**
  * Manages render calls to all gameobjects' spriterenderers
  */
 
-public class RenderManager {
+public class RenderManager implements Disposable{
 
-    private GameObjectManager gameObjectManager;
     private TreeMap<Integer, ArrayList<SpriteRenderer>> renderSequence;
+
+    private SpriteBatch batch = new SpriteBatch();
+
+    /**
+     * Returns the SpriteBatch instance
+     *
+     * @return SpriteBatch
+     */
+    public SpriteBatch getSpriteBatch()
+    {
+        return this.batch;
+    }
+
+    @Override
+    public void dispose()
+    {
+        this.getSpriteBatch().dispose();
+    }
 
     /**
      * Link RenderManager to GameObjectManager
-     * @param gom
      */
 
-    public RenderManager(GameObjectManager gom) {
+    public RenderManager() {
 
-        gameObjectManager = gom;
         renderSequence = new TreeMap<>();
     }
 
