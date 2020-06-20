@@ -8,27 +8,30 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.component.GameObjectManager;
+import com.mundoviventem.component.RenderManager;
 import com.mundoviventem.component.core.SoundManager;
+import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.core.WorldComponent;
 import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.FileManager;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
+import com.mundoviventem.render.TextureList;
 import com.mundoviventem.sound.SoundRepository;
 import com.mundoviventem.texture.TextureRepository;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Main extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+	public static SpriteBatch batch;
 	GameObjectManager gameObjectManager;
 
-	GameObject gameObject;
+
 	GameObject world;
 	GameObject soundObject;
 
-	TextureRepository textureRepository;
+	public static TextureRepository textureRepository;
 	SoundRepository soundRepository;
 
 	public static String Project_Path;
@@ -38,23 +41,47 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		Main.Project_Path = FileManager.determineProjectPath();
 		gameObjectManager = new GameObjectManager();
+		textureRepository = new TextureRepository();
 
-		gameObject = new GameObject(UUID.randomUUID());
-		gameObject.setName("Hannibal Lecter");
-		gameObjectManager.addInstantiatedGameObject(gameObject);
+
+
 
 		GameObject testimg = new GameObject(UUID.randomUUID());
 		testimg.setName("Test Image");
 		gameObjectManager.addInstantiatedGameObject(testimg);
+		SpriteRenderer sr = new SpriteRenderer(testimg.getTransformComponent());
+		testimg.addComponent(sr);
+		gameObjectManager.getRenderManager().addGameObject(testimg);
+
+		TextureList a = new TextureList("test_img", new Vector2(150,150));
+		ArrayList<Vector2> al = new ArrayList<>();
+		al.add(new Vector2(100,100));
+		al.add(new Vector2(1000,100));
+		al.add(new Vector2(100,1000));
+		al.add(new Vector2(1000,1000));
+		TextureList b = new TextureList("badlogic", al);
+
+		sr.addTexture("test_img", 3, new Vector2(300, 300));
+		sr.addTexture(a, 2);
+		sr.addTexture(b, 1);
+
+
+
+
+
+
+
+
+
 
 		world = new GameObject(UUID.randomUUID());
 		world.setName("World");
-		world.addComponent(new WorldComponent(new Vector2(100, 50)));
+		world.addComponent(new WorldComponent(new Vector2(10000, 5000)));
 		world.addComponent(new WorldComponent(new Vector2(20, 30)));
 		gameObjectManager.addInstantiatedGameObject(world);
 
-		textureRepository = new TextureRepository();
-		img = new Texture(textureRepository.getTexture("badlogic"));
+
+
 
 		soundRepository = new SoundRepository();
 		Sound sound = Gdx.audio.newSound(Gdx.files.internal(soundRepository.getSound("test_song")));
@@ -70,8 +97,6 @@ public class Main extends ApplicationAdapter {
 		KeyValueFileByteManager keyValueFileManager = new KeyValueFileByteManager();
 
 
-
-		gameObjectManager.callRender();
 
 
 
@@ -90,17 +115,14 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		gameObjectManager.callRender();
 		gameObjectManager.updateInstantiatedGameObjects();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }

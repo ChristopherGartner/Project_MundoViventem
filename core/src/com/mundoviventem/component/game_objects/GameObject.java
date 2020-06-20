@@ -265,4 +265,18 @@ public class GameObject
 
         return "GameObject[name=" + this.getName() + ";UUID=" + this.getGameObjectUUID() + ";Components=[" + components + "]" + "]";
     }
+
+    /**
+     * Returns the Transform Component of the object. Direct links like this are usually forbidden, but Transform is an
+     * exception as it is mandatory for all GameObjects
+     * basically just a shortcut for (Transform) bc.getComponentFromClass(), also makes links between baseComponents of
+     * the same GameObject easier, notably SpriteRenderer and Transform
+     * @return
+     */
+    public Transform getTransformComponent(){
+        for(BaseComponent bc : this.components){
+            if(bc instanceof Transform) return (Transform) bc;
+        }
+        return null;
+    }
 }

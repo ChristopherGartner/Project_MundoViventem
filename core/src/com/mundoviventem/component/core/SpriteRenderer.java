@@ -1,5 +1,16 @@
 package com.mundoviventem.component.core;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Vector2;
+import com.mundoviventem.game.Main;
+import com.mundoviventem.render.TextureList;
+
+import javax.xml.soap.Text;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -7,7 +18,31 @@ import java.util.TreeMap;
  */
 public class SpriteRenderer extends BaseComponent {
 
-    private TreeMap<Integer, String> renderSequence = new TreeMap<>();
+    private static TreeMap<Integer, ArrayList<TextureList>> renderSequence = new TreeMap<>();
+    private Transform trnsfrmCmp;
+    private boolean useDefaultBatch = true;
+    private ShaderProgram shader;
+    private SpriteBatch batch;
+
+    public SpriteRenderer(Transform transformComponent){
+        trnsfrmCmp = transformComponent;
+        batch = Main.batch;
+    }
+
+    /**
+     * Using this constructor will make the SpriteRenderer create his own SpriteBatch, and manipulate its Shader.
+     * Use this if you want a special shader applied to only a subgroup of textures, but mind the additional resources
+     * an additional draw call costs.
+     * @param transformComponent
+     * @param batchShader
+     */
+    public SpriteRenderer(Transform transformComponent, ShaderProgram batchShader){
+        trnsfrmCmp = transformComponent;
+        useDefaultBatch = false;
+        shader = batchShader;
+        batch = new SpriteBatch();
+        batch.setShader(shader);
+    }
 
     @Override
     public void onEnable()
@@ -28,20 +63,56 @@ public class SpriteRenderer extends BaseComponent {
     }
 
 
-    public void addTexture(String alias, Integer level){
-        if(alias.equals(renderSequence.get(level))){
-            throw new RuntimeException("Texture " + alias + " with level " + level + " already exists");
-        } else if(renderSequence.containsKey(level)){
-            throw new RuntimeException("Level " + level + " for texture " + alias + " is already being used");
-        } else {
-            renderSequence.put(level, alias);
+    public void addTexture(String alias, Integer level, Vector2 coordinates){
+        ArrayList<TextureList> al = renderSequence.get(level);
+        if(al == null) {
+            al = new ArrayList<>();
+            renderSequence.put(level, al);
+        }
+        al.add(new TextureList(alias, coordinates));
+    }
+
+
+    public void addTexture(TextureList texList, Integer level){
+        ArrayList<TextureList> al = renderSequence.get(level);
+        if(al == null) {
+            al = new ArrayList<>();
+            renderSequence.put(level, al);
+        }
+        al.add(texList);
+    }
+
+    /**
+     * Removes the given texture from the list of textures to draw, without knowing which level it is on.
+     * try to avoid
+     * @param texture
+     */
+    public void removeTexture(String texture){
+        for(ArrayList<TextureList> al : renderSequence.values()){
+            for(TextureList tl : al){
+                if(texture.equals(tl.getTexture())) {
+                    al.remove(tl.getTexture());
+                    return;
+                }
+            }
         }
     }
 
-    public void removeTexture(Integer level) {
-        renderSequence.remove(level);
+
+    /**
+     * Removes the given texture from the list of textures to draw
+     * @param level
+     * @param texture
+     */
+    public void removeTexture(Integer level, String texture) {
+        ArrayList al = renderSequence.get(level);
+        al.remove(texture);
     }
 
+
+    public boolean useDefBatch(){
+        return this.useDefaultBatch;
+    }
 
     @Override
     public void gameObjectStartsSleeping()
@@ -51,10 +122,23 @@ public class SpriteRenderer extends BaseComponent {
 
     public void render()
     {
+        batch.begin();
+        for(Map.Entry<Integer, ArrayList<TextureList>> entry : renderSequence.entrySet()){
+            for(TextureList tl : entry.getValue()){
+                //TODO have this handled by a Texture Handler
+                String texPath = Main.textureRepository.getTexture(tl.getTexture());
+                Texture tex = new Texture(texPath);
 
+                System.out.println("Drawing " + tl.getTexture());
+                for(Vector2 coord : tl.getCoordinates()){
+                    batch.draw(tex, coord.x, coord.y);
+                }
+            }
+        }
+        batch.end();
+    }
 
-
-
-
+    public void dispose(){
+        batch.dispose();
     }
 }

@@ -5,6 +5,7 @@ import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.core.Transform;
 import com.mundoviventem.component.game_objects.GameObject;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -16,7 +17,7 @@ import java.util.TreeMap;
 public class RenderManager {
 
     private GameObjectManager gameObjectManager;
-    private TreeMap<Integer, SpriteRenderer> renderSequence = new TreeMap<>();
+    private TreeMap<Integer, ArrayList<SpriteRenderer>> renderSequence;
 
     /**
      * Link RenderManager to GameObjectManager
@@ -34,25 +35,19 @@ public class RenderManager {
      * @param go
      */
 
-    protected void addGameObject(GameObject go){
+    public void addGameObject(GameObject go){
         BaseComponent comp = go.getComponentFromClass(SpriteRenderer.class);
         if(comp == null) return;
         SpriteRenderer renderer = (SpriteRenderer) comp;
         Transform trnsfrm = (Transform) go.getComponentFromClass(Transform.class);
         Integer level = trnsfrm.getBackgroundLevel();
 
-        while(true){
-            if(!renderSequence.containsKey(level)){
-                break;
-            } else {
-                if(level.intValue() == Integer.MAX_VALUE) throw new RuntimeException("Cannot insert spriteRenderer" +
-                        " from GameObject " + go.getName() + " at level " + trnsfrm.getBackgroundLevel() +
-                        ", all following levels are already in use!");
-                level = new Integer(level.intValue() + 1);
-            }
+        ArrayList<SpriteRenderer> al = renderSequence.get(level);
+        if(al == null){
+            al = new ArrayList<>();
+            renderSequence.put(level, al);
         }
-
-        renderSequence.put(level, renderer);
+        al.add(renderer);
     }
 
     /**
@@ -60,24 +55,15 @@ public class RenderManager {
      * @param go
      */
 
-    protected void removeGameObject(GameObject go){
+    public void removeGameObject(GameObject go){
         BaseComponent comp = go.getComponentFromClass(SpriteRenderer.class);
         if(comp == null) return;
         SpriteRenderer renderer = (SpriteRenderer) comp;
+        Transform trnsfrm = (Transform) go.getComponentFromClass(Transform.class);
 
-        Integer keyToRemove = null;
-
-        for (Map.Entry<Integer, SpriteRenderer> entry : renderSequence.entrySet()) {
-            if (Objects.equals(renderer, entry.getValue())) {
-                keyToRemove = entry.getKey();
-            }
-        }
-
-        if(keyToRemove != null){
-            renderSequence.remove(keyToRemove);
-        } else {
-            System.err.println("SpriteRenderer of object " + go.getName() + " was never added to RenderManager!");
-        }
+        ArrayList<SpriteRenderer> al = renderSequence.get(trnsfrm.getBackgroundLevel());
+        if(!renderer.useDefBatch()) renderer.dispose();
+        al.remove(renderer);
     }
 
     /**
@@ -86,8 +72,10 @@ public class RenderManager {
 
     public void renderObjects(){
 
-        for(Map.Entry<Integer, SpriteRenderer> entry : renderSequence.entrySet()){
-            entry.getValue().render();
+        for(Map.Entry<Integer, ArrayList<SpriteRenderer>> entry : renderSequence.entrySet()){
+            for(SpriteRenderer sr : entry.getValue()){
+                sr.render();
+            }
         }
 
     }

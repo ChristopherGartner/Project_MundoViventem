@@ -115,4 +115,8 @@ public class GameObjectManager
     public void callRender(){
         this.renderManager.renderObjects();
     }
+
+    public RenderManager getRenderManager(){
+        return this.renderManager;
+    }
 }

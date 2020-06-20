@@ -35,7 +35,7 @@ public abstract class BaseBlock implements GameObjectConvertable
         GameObject blockObject = new GameObject(UUID.randomUUID());
 
         if(isRenderableBlock()) {
-            blockObject.addComponent(new SpriteRenderer());
+            blockObject.addComponent(new SpriteRenderer(blockObject.getTransformComponent()));
         }
         this.blockObject = blockObject;
     }
