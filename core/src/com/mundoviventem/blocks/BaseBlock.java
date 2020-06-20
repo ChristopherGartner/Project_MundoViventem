@@ -1,6 +1,5 @@
 package com.mundoviventem.blocks;
 
-import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.component.GameObjectConvertable;
 import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.game_objects.GameObject;
@@ -18,43 +17,6 @@ public abstract class BaseBlock implements GameObjectConvertable
      */
     protected boolean isRenderableBlock = true;
 
-    private GameObject blockObject;
-
-    /**
-     * Constructor of BaseBlock.
-     * Creates game object with all it's needed component.
-     * In child classes this game object can get extended.
-     */
-    public BaseBlock()
-    {
-        GameObject blockObject = new GameObject(UUID.randomUUID());
-
-        if(isRenderableBlock()) {
-            blockObject.addComponent(new SpriteRenderer(blockObject.getTransformComponent()));
-        }
-        this.blockObject = blockObject;
-    }
-
-    /**
-     * Returns the game object of the given block
-     *
-     * @return GameObject
-     */
-    protected GameObject getBlockGameObject()
-    {
-        return this.blockObject;
-    }
-
-    /**
-     * Sets the game object of the given block
-     *
-     * @param blockObject = GameObject of the given block
-     */
-    protected void setBlockGameObject(GameObject blockObject)
-    {
-        this.blockObject = blockObject;
-    }
-
     /**
      * Returns if the block is renderable. If not, the game object
      * of the block won't have a SpriteRenderer component.
@@ -69,6 +31,10 @@ public abstract class BaseBlock implements GameObjectConvertable
     @Override
     public GameObject convertToGameObject()
     {
-        return null;
+        GameObject blockObject = new GameObject(UUID.randomUUID());
+        if(isRenderableBlock()) {
+            blockObject.addComponent(new SpriteRenderer(blockObject.getTransformComponent()));
+        }
+        return blockObject;
     }
 }
