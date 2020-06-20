@@ -13,11 +13,6 @@ import java.util.UUID;
 public abstract class BaseBlock implements GameObjectConvertable
 {
     /**
-     * The size of blocks
-     */
-    public static final Vector2 BLOCK_SIZE = new Vector2(32, 32);
-
-    /**
      * Whether the block can be rendered or not. Should get overwritten in
      * child class if it shouldn't be the case
      */
