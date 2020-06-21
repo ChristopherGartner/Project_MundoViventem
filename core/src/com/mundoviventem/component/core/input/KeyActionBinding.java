@@ -10,6 +10,27 @@ public class KeyActionBinding
     private String action;
     private String gameState;
     private boolean isActive;
+    private String id;
+
+    /**
+     * Returns the id of the key action binding
+     *
+     * @return String
+     */
+    public String getId()
+    {
+        return this.id;
+    }
+
+    /**
+     * Sets the id of the key action binding
+     *
+     * @param id = The id of the key action binding
+     */
+    public void setId(String id)
+    {
+        this.id = id;
+    }
 
     /**
      * Returns the keyboard key
