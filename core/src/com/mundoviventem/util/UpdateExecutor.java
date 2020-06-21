@@ -74,4 +74,14 @@ public class UpdateExecutor
 
         ManagerMall.getGameStateManager().renderTopState();
     }
+
+    /**
+     * Returns the current delta time
+     *
+     * @return float
+     */
+    public static float getDeltaTime()
+    {
+        return Gdx.graphics.getDeltaTime();
+    }
 }
