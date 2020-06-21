@@ -1,6 +1,7 @@
 package com.mundoviventem.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.graphics.GL30;
 import com.mundoviventem.io.FileManager;
 import com.mundoviventem.util.UpdateExecutor;
 

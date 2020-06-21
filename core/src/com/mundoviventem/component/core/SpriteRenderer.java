@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.game.Main;
 import com.mundoviventem.game.ManagerMall;
+import com.mundoviventem.render.CustomUniform;
 import com.mundoviventem.render.TextureList;
 
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ public class SpriteRenderer extends BaseComponent {
     private boolean useDefaultBatch = true;
     private ShaderProgram shader;
     private SpriteBatch batch;
-    private long c = 0;
+
+    private CustomUniform texUniform;
 
     public SpriteRenderer(Transform transformComponent){
         trnsfrmCmp = transformComponent;
@@ -53,6 +55,10 @@ public class SpriteRenderer extends BaseComponent {
         shader.setUniformf("u_resolution",(float)2000,(float)1500);
         shader.end();
         */
+        texUniform = new CustomUniform("u_textureRes", CustomUniform.TYPE.VEC2, new float[]{0.0f, 0.0f});
+        ArrayList al = new ArrayList();
+        al.add(texUniform);
+        ManagerMall.getShaderManager().setCustomUniforms("test", al);
 
     }
 
@@ -136,8 +142,8 @@ public class SpriteRenderer extends BaseComponent {
     {
         batch.begin();
         if(!useDefaultBatch){
-            shader.setUniformf("u_time", (float)c);
-            c++;
+            texUniform.updateValue(new float[]{920.0f, 920.0f});
+            ManagerMall.getShaderManager().update(shader);
         }
         for(Map.Entry<Integer, ArrayList<TextureList>> entry : renderSequence.entrySet()){
             for(TextureList tl : entry.getValue()){

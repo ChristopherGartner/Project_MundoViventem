@@ -14,6 +14,9 @@ import com.mundoviventem.util.UpdateExecutor;
  */
 public class ManagerMall
 {
+    private static TextureRepository textureRepository                   = new TextureRepository();
+    private static SoundRepository soundRepository                       = new SoundRepository();
+    private static KeyActionBindingRepository keyActionBindingRepository = new KeyActionBindingRepository();
 
     private static RenderManager renderManager         = new RenderManager();
     private static DisposingManager disposingManager   = new DisposingManager();
@@ -21,9 +24,7 @@ public class ManagerMall
     private static ShaderManager shaderManager         = new ShaderManager();
     private static GameStateManager gameStateManager   = new GameStateManager();
 
-    private static TextureRepository textureRepository                   = new TextureRepository();
-    private static SoundRepository soundRepository                       = new SoundRepository();
-    private static KeyActionBindingRepository keyActionBindingRepository = new KeyActionBindingRepository();
+
 
     private static UpdateExecutor updateExecutor = new UpdateExecutor();
 

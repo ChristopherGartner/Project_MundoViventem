@@ -1,5 +1,7 @@
 package com.mundoviventem.component.core.input;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * data class for key action bindings
  */
@@ -11,6 +13,14 @@ public class KeyActionBinding
     private String gameState;
     private boolean isActive;
     private String id;
+    private Vector2 coords;
+
+
+    public KeyActionBinding(String binding_id){
+        id = binding_id;
+        coords = new Vector2(0, 0);
+    }
+
 
     /**
      * Returns the id of the key action binding
@@ -110,5 +120,22 @@ public class KeyActionBinding
     public void setIsActive(boolean isActive)
     {
         this.isActive = isActive;
+    }
+
+
+    /**
+     * Sets coordinates, only used with mouse inputs
+     *
+     */
+    public void setCoords(Vector2 coordinates){
+        coords = coordinates;
+    }
+
+    /**
+     * Gets coordinates, only used with mouse inputs
+     *
+     */
+    public Vector2 getCoords(){
+        return coords;
     }
 }

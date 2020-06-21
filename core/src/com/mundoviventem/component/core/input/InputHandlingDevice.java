@@ -1,6 +1,7 @@
 package com.mundoviventem.component.core.input;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.game.ManagerMall;
 import com.mundoviventem.util.Printer;
 
@@ -53,6 +54,8 @@ public class InputHandlingDevice implements InputProcessor
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        KeyActionBinding keyActionBinding = ManagerMall.getKeyActionBindingRepository().getKeyActionBindingById("mouse");
+        keyActionBinding.setCoords(new Vector2(screenX, screenY));
         return false;
     }
 

@@ -13,11 +13,11 @@ public class Printer
      * DEBUG: For very detailed prints.
      * OFF: Prints are deactivated
      */
-     public static enum  Printing_State {
+     public enum  Printing_State {
          RAW, DETAILED, DEBUG, OFF
      }
 
-     private static Printing_State currentPrintingState = Printing_State.DEBUG;
+     private static Printing_State currentPrintingState = Printing_State.RAW;
 
      public static Printing_State getCurrentPrintingState()
      {

@@ -45,7 +45,6 @@ public class Playground
      */
     public void create()
     {
-        ManagerMall.getShaderManager().readShaders(Main.Project_Path + "\\core\\assets\\shaders\\test_directory");
 
         this.menuState = new MenuState();
 
@@ -57,8 +56,7 @@ public class Playground
         testimg.addComponent(sr);
         menuState.getGameStateRenderer().addGameObject(testimg);
         ShaderProgram.pedantic = false;
-        ShaderProgram testShader = new ShaderProgram(new FileHandle(new File(Main.Project_Path + "\\core\\assets\\shaders\\test_directory\\shader.vert")),
-                new FileHandle(new File(Main.Project_Path + "\\core\\assets\\shaders\\test_directory\\shader.frag")));
+        ShaderProgram testShader = ManagerMall.getShaderManager().getShaderProgram("test");
         TextureList a = new TextureList("test_img", new Vector2(150,150));
         ArrayList<Vector2> al = new ArrayList<>();
         al.add(new Vector2(100,100));

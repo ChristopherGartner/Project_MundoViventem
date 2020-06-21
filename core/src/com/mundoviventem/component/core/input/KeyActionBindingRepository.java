@@ -14,18 +14,23 @@ public class KeyActionBindingRepository
 
     public KeyActionBindingRepository()
     {
-        KeyActionBinding leonVonHintenNehmen = new KeyActionBinding();
+        KeyActionBinding leonVonHintenNehmen = new KeyActionBinding("key_f");
         leonVonHintenNehmen.setKey(Input.Keys.F);
         leonVonHintenNehmen.setAction("Leon von hinten nehmen");
         leonVonHintenNehmen.setGameState("in_game");
 
-        KeyActionBinding leonKastrieren = new KeyActionBinding();
+        KeyActionBinding leonKastrieren = new KeyActionBinding("key_w");
         leonKastrieren.setKey(Input.Keys.W);
         leonKastrieren.setAction("Leon kastrieren");
         leonKastrieren.setGameState("in_game");
 
+        KeyActionBinding mouse = new KeyActionBinding("mouse");
+        mouse.setGameState("in_game");
+
         this.keyActionBindings.add(leonVonHintenNehmen);
         this.keyActionBindings.add(leonKastrieren);
+        this.keyActionBindings.add(mouse);
+
     }
 
     /**
