@@ -35,8 +35,8 @@ public class FixedUpdateExecutionThread extends Thread
     @Override
     public void run()
     {
+        Printer.print("Starting Thread 'FixedUpdateExecutionThread'", Printer.Printing_State.RAW);
         while (true) {
-            Printer.print("Starting Thread 'FixedUpdateExecutionThread'", Printer.Printing_State.RAW);
             long start = System.currentTimeMillis();
             this.updateExecutor.fixedUpdate();
             long elapsedTime = System.currentTimeMillis() - start;
