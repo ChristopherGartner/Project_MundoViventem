@@ -5,6 +5,7 @@ import com.mundoviventem.component.RenderManager;
 import com.mundoviventem.component.core.input.KeyActionBindingRepository;
 import com.mundoviventem.render.ShaderManager;
 import com.mundoviventem.sound.SoundRepository;
+import com.mundoviventem.states.GameStateManager;
 import com.mundoviventem.texture.TextureRepository;
 
 /**
@@ -17,6 +18,7 @@ public class ManagerMall
     private static DisposingManager disposingManager   = new DisposingManager();
     private static GameObjectManager gameObjectManager = new GameObjectManager();
     private static ShaderManager shaderManager         = new ShaderManager();
+    private static GameStateManager gameStateManager   = new GameStateManager();
 
     private static TextureRepository textureRepository                   = new TextureRepository();
     private static SoundRepository soundRepository                       = new SoundRepository();
@@ -60,6 +62,16 @@ public class ManagerMall
     public static ShaderManager getShaderManager()
     {
         return ManagerMall.shaderManager;
+    }
+
+    /**
+     * Returns the instance of the GameStateManager
+     *
+     * @return GameStateManager
+     */
+    public static GameStateManager getGameStateManager()
+    {
+        return ManagerMall.gameStateManager;
     }
 
     /**

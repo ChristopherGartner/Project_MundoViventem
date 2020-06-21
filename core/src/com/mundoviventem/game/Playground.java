@@ -15,6 +15,7 @@ import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
 import com.mundoviventem.render.TextureList;
+import com.mundoviventem.states.MenuState;
 import com.mundoviventem.util.Printer;
 
 import java.io.File;
@@ -32,6 +33,8 @@ public class Playground
     GameObject soundObject;
     GameObject inputObject;
 
+    MenuState menuState;
+
     public Playground()
     {
         this.create();
@@ -44,14 +47,15 @@ public class Playground
     {
         ManagerMall.getShaderManager().readShaders(Main.Project_Path + "\\core\\assets\\shaders\\test_directory");
 
+        this.menuState = new MenuState();
 
         GameObject testimg = new GameObject(UUID.randomUUID());
         testimg.setName("Test Image");
-        ManagerMall.getGameObjectManager().addInstantiatedGameObject(testimg);
+        menuState.addInstantiatedGameObject(testimg);
         testimg.getTransformComponent().setBackgroundLevel(0);
         SpriteRenderer sr = new SpriteRenderer(testimg.getTransformComponent());
         testimg.addComponent(sr);
-        ManagerMall.getRenderManager().addGameObject(testimg);
+        menuState.getGameStateRenderer().addGameObject(testimg);
         ShaderProgram.pedantic = false;
         ShaderProgram testShader = new ShaderProgram(new FileHandle(new File(Main.Project_Path + "\\core\\assets\\shaders\\test_directory\\shader.vert")),
                 new FileHandle(new File(Main.Project_Path + "\\core\\assets\\shaders\\test_directory\\shader.frag")));
@@ -69,26 +73,27 @@ public class Playground
 
         GameObject huso = new GameObject(UUID.randomUUID());
         huso.setName("Guter Mann");
-        ManagerMall.getGameObjectManager().addInstantiatedGameObject(huso);
+        menuState.addInstantiatedGameObject(huso);
         huso.getTransformComponent().setBackgroundLevel(1);
         SpriteRenderer huso_sr = new SpriteRenderer(huso.getTransformComponent(), testShader);
         huso.addComponent(huso_sr);
-        ManagerMall.getRenderManager().addGameObject(huso);
+        menuState.getGameStateRenderer().addGameObject(huso);
         huso_sr.addTexture("hitler", 3, new Vector2(300,300));
 
 
         inputObject = new GameObject(UUID.randomUUID());
         inputObject.setName("Leon's Nightmare");
-        ManagerMall.getGameObjectManager().addInstantiatedGameObject(inputObject);
         InputHandler inputHandler = new InputHandler();
         inputObject.addComponent(inputHandler);
+        menuState.setInputObject(inputObject);
+        menuState.initializeGameState();
 
 
         world = new GameObject(UUID.randomUUID());
         world.setName("World");
         world.addComponent(new WorldComponent(new Vector2(10000, 5000)));
         world.addComponent(new WorldComponent(new Vector2(20, 30)));
-        ManagerMall.getGameObjectManager().addInstantiatedGameObject(world);
+        menuState.addInstantiatedGameObject(world);
 
 
         Sound sound = Gdx.audio.newSound(Gdx.files.internal(ManagerMall.getSoundRepository().getSound("test_song")));
@@ -99,7 +104,7 @@ public class Playground
         soundObject.addComponent(soundManager);
         ((SoundManager) soundObject.getComponentFromClass(SoundManager.class)).registerNewSound(sound, "Test_Registration", new SoundConfiguration());
         ((SoundManager) soundObject.getComponentFromClass(SoundManager.class)).getSoundRegistrations().forEach((soundRegistration -> {soundRegistration.setPlaying(true);}));
-        ManagerMall.getGameObjectManager().addInstantiatedGameObject(soundObject);
+        menuState.addInstantiatedGameObject(soundObject);
 
         KeyValueFileByteManager keyValueFileManager = new KeyValueFileByteManager();
 
@@ -115,6 +120,10 @@ public class Playground
         } catch (Exception exception) {
             System.err.println("Du Lappen");
         }
+
+
+        // Pushes the Menu Game State to the top
+        ManagerMall.getGameStateManager().push(menuState);
     }
 
     /**
@@ -124,8 +133,6 @@ public class Playground
     {
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        ManagerMall.getGameObjectManager().callRender();
-        ManagerMall.getGameObjectManager().updateInstantiatedGameObjects();
 
         ArrayList<KeyActionBinding> keyActionBindings = ManagerMall.getKeyActionBindingRepository().getKeyActionBindings();
 
@@ -139,6 +146,10 @@ public class Playground
                 }
             }
         }
+
+        // Calls update and render of the GameStateManager
+        ManagerMall.getGameStateManager().updateTopState();
+        ManagerMall.getGameStateManager().renderTopState();
     }
 
 }

@@ -17,8 +17,6 @@ import java.util.TreeMap;
 
 public class RenderManager implements Disposable{
 
-    private TreeMap<Integer, ArrayList<SpriteRenderer>> renderSequence;
-
     private SpriteBatch batch = new SpriteBatch();
 
     /**
@@ -38,55 +36,10 @@ public class RenderManager implements Disposable{
     }
 
     /**
-     * Link RenderManager to GameObjectManager
-     */
-
-    public RenderManager() {
-
-        renderSequence = new TreeMap<>();
-    }
-
-    /**
-     * Adds a GameObjects' SpriteRenderer and corresponding backgroundlevel to the list
-     * @param go
-     */
-
-    public void addGameObject(GameObject go){
-        BaseComponent comp = go.getComponentFromClass(SpriteRenderer.class);
-        if(comp == null) return;
-        SpriteRenderer renderer = (SpriteRenderer) comp;
-        Transform trnsfrm = (Transform) go.getComponentFromClass(Transform.class);
-        Integer level = trnsfrm.getBackgroundLevel();
-
-        ArrayList<SpriteRenderer> al = renderSequence.get(level);
-        if(al == null){
-            al = new ArrayList<>();
-            renderSequence.put(level, al);
-        }
-        al.add(renderer);
-    }
-
-    /**
-     * Removes a GameObjects' SpriteRenderer from the list of renderers to call
-     * @param go
-     */
-
-    public void removeGameObject(GameObject go){
-        BaseComponent comp = go.getComponentFromClass(SpriteRenderer.class);
-        if(comp == null) return;
-        SpriteRenderer renderer = (SpriteRenderer) comp;
-        Transform trnsfrm = (Transform) go.getComponentFromClass(Transform.class);
-
-        ArrayList<SpriteRenderer> al = renderSequence.get(trnsfrm.getBackgroundLevel());
-        if(!renderer.useDefBatch()) renderer.dispose();
-        al.remove(renderer);
-    }
-
-    /**
      * Calls all SpriteRenderers in sequence to render
      */
 
-    public void renderObjects(){
+    public void renderObjects(TreeMap<Integer, ArrayList<SpriteRenderer>> renderSequence){
 
         for(Map.Entry<Integer, ArrayList<SpriteRenderer>> entry : renderSequence.entrySet()){
             for(SpriteRenderer sr : entry.getValue()){

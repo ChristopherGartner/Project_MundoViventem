@@ -17,7 +17,7 @@ public class Printer
          RAW, DETAILED, DEBUG, OFF
      }
 
-     private static Printing_State currentPrintingState = Printing_State.RAW;
+     private static Printing_State currentPrintingState = Printing_State.DETAILED;
 
      public static Printing_State getCurrentPrintingState()
      {
