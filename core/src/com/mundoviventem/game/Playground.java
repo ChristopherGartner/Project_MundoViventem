@@ -131,25 +131,7 @@ public class Playground
      */
     public void render()
     {
-        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        ArrayList<KeyActionBinding> keyActionBindings = ManagerMall.getKeyActionBindingRepository().getKeyActionBindings();
-
-        for(KeyActionBinding keyActionBinding : keyActionBindings) {
-            if(keyActionBinding.isActive()) {
-                if(keyActionBinding.getAction().equals("Leon von hinten nehmen")) {
-                    Printer.print("(Action: Leon von hinten nehmen) Leon schreit wie eine wild gewordene Stute!", Printer.Printing_State.DETAILED);
-                }
-                if(keyActionBinding.getAction().equals("Leon kastrieren")) {
-                    Printer.print("(Action: Leon kastrieren) FATAL_ERROR - NULL_POINTER_EXCEPTION: Kein Schwanz gefunden!", Printer.Printing_State.DETAILED);
-                }
-            }
-        }
-
-        // Calls update and render of the GameStateManager
-        ManagerMall.getGameStateManager().updateTopState();
-        ManagerMall.getGameStateManager().renderTopState();
     }
 
 }

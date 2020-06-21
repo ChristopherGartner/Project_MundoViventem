@@ -2,6 +2,7 @@ package com.mundoviventem.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.mundoviventem.io.FileManager;
+import com.mundoviventem.util.UpdateExecutor;
 
 /**
  * Main class for the application
@@ -11,6 +12,7 @@ public class Main extends ApplicationAdapter {
 	public static String Project_Path;
 
 	private Playground playground;
+	private UpdateExecutor updateExecutor;
 
 	@Override
 	public void create () {
@@ -22,12 +24,18 @@ public class Main extends ApplicationAdapter {
 
 		// Testing ground for development purposes
 		this.playground = new Playground();
+
+		this.updateExecutor = ManagerMall.getUpdateExecutor();
+		this.updateExecutor.startFixedUpdateThread();
 	}
 
 	@Override
 	public void render ()
 	{
 		playground.render();
+
+		this.updateExecutor.update();
+		this.updateExecutor.lateUpdate();
 	}
 	
 	@Override

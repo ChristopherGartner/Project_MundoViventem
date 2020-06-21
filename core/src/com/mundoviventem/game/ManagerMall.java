@@ -7,6 +7,7 @@ import com.mundoviventem.render.ShaderManager;
 import com.mundoviventem.sound.SoundRepository;
 import com.mundoviventem.states.GameStateManager;
 import com.mundoviventem.texture.TextureRepository;
+import com.mundoviventem.util.UpdateExecutor;
 
 /**
  * Here you will find everything for your manager uses
@@ -23,6 +24,8 @@ public class ManagerMall
     private static TextureRepository textureRepository                   = new TextureRepository();
     private static SoundRepository soundRepository                       = new SoundRepository();
     private static KeyActionBindingRepository keyActionBindingRepository = new KeyActionBindingRepository();
+
+    private static UpdateExecutor updateExecutor = new UpdateExecutor();
 
     /**
      * Returns the instance of the RenderManager
@@ -102,5 +105,15 @@ public class ManagerMall
     public static KeyActionBindingRepository getKeyActionBindingRepository()
     {
         return ManagerMall.keyActionBindingRepository;
+    }
+
+    /**
+     * Returns the instance of the UpdateExecutor
+     *
+     * @return UpdateExecutor
+     */
+    public static UpdateExecutor getUpdateExecutor()
+    {
+        return ManagerMall.updateExecutor;
     }
 }
