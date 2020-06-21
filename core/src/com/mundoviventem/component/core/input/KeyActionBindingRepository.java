@@ -74,12 +74,30 @@ public class KeyActionBindingRepository
      *
      * @param key = The pressed keyboard key
      *
-     * @return int
+     * @return KeyActionBinding
      */
     public KeyActionBinding getKeyActionBindingByKey(int key)
     {
         for (KeyActionBinding keyActionBinding : this.keyActionBindings) {
             if(keyActionBinding.getKey() == key) {
+                return keyActionBinding;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the to the id associated binding. If the id is not bound, null gets
+     * returned
+     *
+     * @param id = The id of the binding
+     *
+     * @return KeyActionBinding
+     */
+    public KeyActionBinding getKeyActionBindingById(String id)
+    {
+        for(KeyActionBinding keyActionBinding : this.keyActionBindings) {
+            if(keyActionBinding.getId().equals(id)) {
                 return keyActionBinding;
             }
         }
