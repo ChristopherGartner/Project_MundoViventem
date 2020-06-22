@@ -26,7 +26,7 @@ void main(void)
     vec4 finalColor;
 
     vec2 radius = vec2(0.1, 0.0);
-    float distance = abs(length(u_mouse - vec2(gl_FragCoord.x,gl_FragCoord.y)))/800.0;
+    float distance = abs(length(u_mouse - vec2(gl_FragCoord.x,gl_FragCoord.y)))/8.0;
     float smoothRed = smoothstep(localColor.r-offsetLight,localColor.r-offsetDark, distance);
     float smoothGreen = smoothstep(localColor.g-offsetLight, localColor.g-offsetDark, distance);
     float smoothBlue = smoothstep(localColor.b-offsetLight, localColor.b-offsetDark, distance);
