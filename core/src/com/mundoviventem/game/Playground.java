@@ -15,7 +15,7 @@ import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
 import com.mundoviventem.render.RenderParams;
-import com.mundoviventem.render.TextureList;
+import com.mundoviventem.render.ShaderParams;
 import com.mundoviventem.render.TextureParams;
 import com.mundoviventem.states.MenuState;
 import com.mundoviventem.util.Printer;
@@ -58,24 +58,25 @@ public class Playground
         SpriteRenderer sr = new SpriteRenderer(testimg.getTransformComponent());
         testimg.addComponent(sr);
         menuState.getGameStateRenderer().addGameObject(testimg);
-        ShaderProgram.pedantic = false;
-        ShaderProgram testShader = ManagerMall.getShaderManager().getShaderProgram("test");
         TextureParams a = new TextureParams("test_img", new Vector2(150,150), new Vector2(50, 50));
         ArrayList<Vector2> al = new ArrayList<>();
         al.add(new Vector2(100,100));
         al.add(new Vector2(1000,100));
         al.add(new Vector2(100,1000));
         al.add(new Vector2(1000,1000));
-        TextureParams b = new TextureParams("badlogic", al, new Vector2(-1, -1));
+        String newShaderPair = ManagerMall.getShaderManager().getCustomPair("DEFAULT", "rainbow");
+        ShaderParams sp = new ShaderParams(newShaderPair);
+        TextureParams b = new TextureParams("badlogic", al, new Vector2(-1, -1), sp);
         ArrayList<TextureParams> tl1 = new ArrayList<>();
         tl1.add(a);
         ArrayList<TextureParams> tl2 = new ArrayList<>();
         tl2.add(b);
         TreeMap<Integer, ArrayList<TextureParams>> map1 = new TreeMap<>();
-        map1.put(0, tl1);
-        map1.put(1, tl2);
+        map1.put(1, tl1);
+        map1.put(0, tl2);
 
         RenderParams rp1 = new RenderParams(map1);
+        sr.setNewRenderParams(rp1);
 
         GameObject huso = new GameObject(UUID.randomUUID());
         huso.setName("Guter Mann");
@@ -84,8 +85,8 @@ public class Playground
         SpriteRenderer huso_sr = new SpriteRenderer(huso.getTransformComponent());
         huso.addComponent(huso_sr);
         menuState.getGameStateRenderer().addGameObject(huso);
-                addTexture("hitler", 3, new Vector2(300,300));
-
+        RenderParams rp2 = new RenderParams("hitler", new Vector2(300,300), new Vector2(-1, -1));
+        huso_sr.setNewRenderParams(rp2);
 
         inputObject = new GameObject(UUID.randomUUID());
         inputObject.setName("Leon's Nightmare");

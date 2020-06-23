@@ -34,6 +34,7 @@ public class ShaderManager {
 
 
     public ShaderManager(){
+        ShaderProgram.pedantic = false;
         readShaders(Main.Project_Path + "\\core\\assets\\shaders");
 
         initializeDefUniforms();
@@ -99,6 +100,8 @@ public class ShaderManager {
             String tmp = availableFragShaders.get(entryVert.getKey());
             if(tmp != null){
                 ShaderProgram shader = new ShaderProgram(entryVert.getValue(), tmp);
+                if(!shader.getLog().equals("")) System.err.println("Shader pair " + entryVert.getKey() + " threw: \n" +
+                        shader.getLog());
                 if(!shader.isCompiled()) {
                     System.err.println("Failed to compile Shader " + entryVert.getKey());
                     continue;
@@ -120,8 +123,6 @@ public class ShaderManager {
         });
         Vector2 mouse = ManagerMall.getKeyActionBindingRepository().getKeyActionBindingById("mouse").getCoords();
         u_mouseLocation.updateValue(new float[]{mouse.x, mouse.y});
-        System.out.println("Res: " + Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight() + " Mouse: " +
-                mouse.x + " " + mouse.y);
         u_time.update(shader);
         u_resolution.update(shader);
         u_mouseLocation.update(shader);
@@ -134,6 +135,7 @@ public class ShaderManager {
         ShaderProgram shader = getShaderProgram(shaderParams.getShader());
         updateDefaultUniforms(shader);
 
+        shader.begin();
         for (CustomUniform u : defUniforms){
             u.update(shader);
         }
@@ -141,6 +143,7 @@ public class ShaderManager {
         for(CustomUniform u : shaderParams.getUniforms()){
             u.update(shader);
         }
+        shader.end();
     }
 
 
@@ -155,9 +158,10 @@ public class ShaderManager {
     public String getCustomPair(String vertName, String fragName){
         String v = availableVertShaders.get(vertName);
         String f = availableFragShaders.get(fragName);
-        if(v == null || f == null) return null;
-        ShaderProgram sp = new ShaderProgram(vertName, fragName);
-        if(!sp.isCompiled()) return null;
+        if(v == null || f == null) return DEFAULT_SHADER_NAME;
+        ShaderProgram sp = new ShaderProgram(v, f);
+        if(!sp.getLog().equals("")) System.err.println("Shader pair " + vertName + "+" + fragName + " threw: \n" + sp.getLog());
+        if(!sp.isCompiled()) return DEFAULT_SHADER_NAME;
         String shaderName = vertName + "+" + fragName;
         availableShaders.put(shaderName, sp);
         return shaderName;
@@ -169,7 +173,7 @@ public class ShaderManager {
         for(Map.Entry<String, ShaderProgram> entry : availableShaders.entrySet()){
             if(entry.getValue().equals(shader)) return entry.getKey();
         }
-        return null;
+        return DEFAULT_SHADER_NAME;
     }
 
     public ShaderProgram getDefaultShader(){

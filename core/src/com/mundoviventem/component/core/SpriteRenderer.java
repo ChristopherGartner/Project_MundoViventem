@@ -72,7 +72,7 @@ public class SpriteRenderer extends BaseComponent implements Disposable {
     {
         for(ArrayList<TextureParams> al : renderSequence.values()){
             for(TextureParams tp : al){
-                if(tp.getShaderParams() == null) continue;
+                if(tp.getShaderParams() == null || tp.getShaderParams().getShader() == null) continue;
                 ManagerMall.getShaderManager().update(tp.getShaderParams());
             }
         }
@@ -110,6 +110,6 @@ public class SpriteRenderer extends BaseComponent implements Disposable {
     }
 
     public void dispose(){
-        batch.dispose();
+        if(!batch.equals(ManagerMall.getRenderManager().getSpriteBatch())) batch.dispose();
     }
 }
