@@ -1,5 +1,6 @@
 package com.mundoviventem.blocks;
 
+import com.badlogic.gdx.math.Vector2;
 import com.mundoviventem.component.GameObjectConvertable;
 import com.mundoviventem.component.core.SoundManager;
 import com.mundoviventem.component.core.SpriteRenderer;
@@ -15,6 +16,12 @@ import java.util.UUID;
  */
 public abstract class BaseBlock implements GameObjectConvertable
 {
+
+    /**
+     * Constant for Block size
+     */
+    final public static Vector2 BLOCK_SIZE = new Vector2(16, 16);
+
     /**
      * Whether the block can be rendered or not. Should get overwritten in
      * child class if it shouldn't be the case
@@ -28,11 +35,21 @@ public abstract class BaseBlock implements GameObjectConvertable
 
     private String id;
 
+    /**
+     * Constructor for BaseBlock
+     *
+     * @param id = The id of the block
+     */
     public BaseBlock(String id)
     {
         this.id = id;
     }
 
+    /**
+     * Returns the id of the block
+     *
+     * @return String
+     */
     public String getId()
     {
         return this.id;
