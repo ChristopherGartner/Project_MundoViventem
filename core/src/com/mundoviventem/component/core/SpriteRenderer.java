@@ -85,6 +85,11 @@ public class SpriteRenderer extends BaseComponent implements Disposable {
         // TODO
     }
 
+    @Override
+    public void gameObjectAwakens() {
+
+    }
+
     public void render()
     {
         for(Map.Entry<Integer, ArrayList<TextureParams>> entry : renderSequence.entrySet()){

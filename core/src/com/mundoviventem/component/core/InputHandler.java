@@ -34,6 +34,11 @@ public class InputHandler extends BaseComponent
 
     }
 
+    @Override
+    public void gameObjectAwakens() {
+
+    }
+
     /**
      * Returns whether this InputHandler instance is the actively used one
      *

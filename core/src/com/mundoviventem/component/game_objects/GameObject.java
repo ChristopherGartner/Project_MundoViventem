@@ -198,6 +198,7 @@ public class GameObject
      */
     public void setGameObjectAwake()
     {
+        this.components.forEach(BaseComponent::gameObjectAwakens);
         this.isSleeping = false;
     }
 

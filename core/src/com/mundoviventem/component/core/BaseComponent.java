@@ -34,6 +34,11 @@ public abstract class BaseComponent
     public abstract void gameObjectStartsSleeping();
 
     /**
+     * Gets called when game object gets awaken from sleep mode
+     */
+    public abstract void gameObjectAwakens();
+
+    /**
      * Sets the game object the component gets bound to
      *
      * @param gameObject = Game object, which owns the component instance

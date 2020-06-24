@@ -122,4 +122,10 @@ public class Transform extends BaseComponent
     {
         // Do nothing
     }
+
+    @Override
+    public void gameObjectAwakens()
+    {
+        // Do nothing
+    }
 }

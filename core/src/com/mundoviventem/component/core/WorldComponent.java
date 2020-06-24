@@ -59,7 +59,13 @@ public class WorldComponent extends BaseComponent
     }
 
     @Override
-    public void gameObjectStartsSleeping() {
+    public void gameObjectStartsSleeping()
+    {
+    }
+
+    @Override
+    public void gameObjectAwakens()
+    {
 
     }
 }

@@ -41,6 +41,11 @@ public class SoundManager extends BaseComponent
         }));
     }
 
+    @Override
+    public void gameObjectAwakens()
+    {
+    }
+
     /**
      * Registers a new sound registration
      *
