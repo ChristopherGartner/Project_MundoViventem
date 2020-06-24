@@ -32,6 +32,7 @@ public class CustomUniform {
             switch(type){
                 case FLOAT:
                     shader.setUniformf(name, values[0]);
+                    System.out.println("Updated " + name + " with " + values[0]);
                     break;
                 case INT:
                     shader.setUniformi(name, (int) values[0]);

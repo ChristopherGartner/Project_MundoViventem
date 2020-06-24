@@ -57,7 +57,7 @@ public class GameStateRenderer
         Transform trnsfrm = (Transform) go.getComponentFromClass(Transform.class);
 
         ArrayList<SpriteRenderer> al = renderSequence.get(trnsfrm.getBackgroundLevel());
-        if(!renderer.useDefBatch()) renderer.dispose();
+        renderer.dispose();
         al.remove(renderer);
     }
 
