@@ -160,9 +160,9 @@ public class GameObject
     }
 
     /**
-     * Calls all update method of the game objects.
+     * Calls all updateUniforms method of the game objects.
      * This method shouldn't get overwritten for normal
-     * update functionality adding. Use "update()" method
+     * updateUniforms functionality adding. Use "updateUniforms()" method
      * instead
      */
     public void updateGameObject()

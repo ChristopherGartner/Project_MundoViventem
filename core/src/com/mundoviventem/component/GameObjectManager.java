@@ -61,5 +61,6 @@ public class GameObjectManager
      */
     public void callRender(GameState gameState){
         ManagerMall.getRenderManager().renderObjects(gameState.getGameStateRenderer().getRenderSequence());
+        ManagerMall.getRenderManager().renderGlobalShaders();
     }
 }

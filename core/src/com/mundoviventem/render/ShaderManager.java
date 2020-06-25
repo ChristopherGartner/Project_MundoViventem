@@ -3,6 +3,7 @@ package com.mundoviventem.render;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 import com.mundoviventem.game.Main;
 import com.mundoviventem.game.ManagerMall;
 import com.mundoviventem.util.Helper;
@@ -14,9 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class ShaderManager {
+public class ShaderManager implements Disposable {
 
-    public final Integer SHADER_LIFETIME_INFINITY = -1;
+    public final Double SHADER_LIFETIME_INFINITY = Double.MIN_VALUE;
 
     private final String DEFAULT_SHADER_NAME = "DEFAULT";
 
@@ -27,14 +28,24 @@ public class ShaderManager {
 
     private ArrayList<CustomUniform> defUniforms = new ArrayList<>();
 
+    private TreeMap<ShaderManager.GlobalShader, ShaderProgram> activeGlobalShaders = new TreeMap<>();
+    private TreeMap<ShaderManager.GlobalShader, Double> globalShaderLifetime = new TreeMap<>();
+
     //default uniforms
     private CustomUniform u_resolution;
     private CustomUniform u_mouseLocation;
     private CustomUniform u_time;
 
+    public enum GlobalShader {
+        WATER,
+        HEAT_Waves,
+        TORCH_LIGHTING,
+        BLOODY_SCREEN
+    }
 
     public ShaderManager(){
         ShaderProgram.pedantic = false;
+        ManagerMall.getDisposingManager().addNewDisposableObject(this);
         readShaders(Main.Project_Path + "\\core\\assets\\shaders");
 
         initializeDefUniforms();
@@ -60,7 +71,12 @@ public class ShaderManager {
 
 
 
-    public void commitGlobalShaders(TreeMap<Integer, ArrayList<ShaderParams>> globalShaders){
+    public void commitGlobalShaders(TreeMap<ShaderManager.GlobalShader, ShaderParams> globalShaders){
+
+        for(Map.Entry<ShaderManager.GlobalShader, ShaderParams> entry : globalShaders.entrySet()){
+            activeGlobalShaders.put(entry.getKey(), getShaderProgram(entry.getValue().getShader()));
+            globalShaderLifetime.put(entry.getKey(), entry.getValue().getLifetime());
+        }
 
     }
 
@@ -130,7 +146,7 @@ public class ShaderManager {
 
 
 
-    public void update(ShaderParams shaderParams){
+    public void updateUniforms(ShaderParams shaderParams){
 
         ShaderProgram shader = getShaderProgram(shaderParams.getShader());
         updateDefaultUniforms(shader);
@@ -146,6 +162,21 @@ public class ShaderManager {
         shader.end();
     }
 
+    public void updateGlobalShaders(){
+        for(Map.Entry<ShaderManager.GlobalShader, Double> entry : globalShaderLifetime.entrySet()){
+            if(entry.getValue().equals(SHADER_LIFETIME_INFINITY)) continue;
+            if(entry.getValue() < 0) {
+                activeGlobalShaders.remove(entry.getKey());
+                globalShaderLifetime.remove(entry.getKey());
+            } else {
+                globalShaderLifetime.put(entry.getKey(), entry.getValue() - Gdx.graphics.getDeltaTime());
+            }
+        }
+    }
+
+    public TreeMap<ShaderManager.GlobalShader, ShaderProgram> getActiveGlobalShaders(){
+        return activeGlobalShaders;
+    }
 
 
 
@@ -178,5 +209,11 @@ public class ShaderManager {
 
     public ShaderProgram getDefaultShader(){
         return def;
+    }
+
+    public void dispose(){
+        for(ShaderProgram shader : availableShaders.values()){
+            shader.dispose();
+        }
     }
 }

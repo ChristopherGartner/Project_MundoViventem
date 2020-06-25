@@ -3,7 +3,7 @@ package com.mundoviventem.util;
 import com.mundoviventem.game.ManagerMall;
 
 /**
- * Thread which performs the fixed update steps
+ * Thread which performs the fixed updateUniforms steps
  */
 public class FixedUpdateExecutionThread extends Thread
 {
@@ -41,7 +41,7 @@ public class FixedUpdateExecutionThread extends Thread
             this.updateExecutor.fixedUpdate();
             long elapsedTime = System.currentTimeMillis() - start;
 
-            Printer.print("Fixed update calculation took " + elapsedTime + " milliseconds", Printer.Printing_State.DEBUG);
+            Printer.print("Fixed updateUniforms calculation took " + elapsedTime + " milliseconds", Printer.Printing_State.DEBUG);
             if(elapsedTime < this.millisecondsPerTick) {
                 try {
                     long timeToSleep = ((long) this.millisecondsPerTick) - elapsedTime;

@@ -5,10 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+/**
+ * A data class to deliver all relevant instructions on what and how to render to the SpriteRenderer
+ */
+
 public class RenderParams {
 
     private TreeMap<Integer, ArrayList<TextureParams>> renderSeq;
-    private TreeMap<Integer, ArrayList<ShaderParams>> glblShaders;
+    private TreeMap<ShaderManager.GlobalShader, ShaderParams> glblShaders;
     private boolean usesCustomShaders = false;
 
     public RenderParams(TreeMap<Integer, ArrayList<TextureParams>> renderSequence){
@@ -16,8 +20,16 @@ public class RenderParams {
         checkForCustomShader();
     }
 
+    /**
+     * Builds the RenderParams object and checks if custom shaders are used, if so, sets flag
+     * @param renderSequence A treemap with the render priority as its key (0 - draw first (furthest in the back),
+     *                       max_value - drawn last (closest in the front)) and a List of TextureParams to draw at
+     *                       that priority.
+     * @param globalShaders Can optionally also carry ShaderParams for global shader
+     */
+
     public RenderParams(TreeMap<Integer, ArrayList<TextureParams>> renderSequence,
-                        TreeMap<Integer, ArrayList<ShaderParams>> globalShaders){
+                        TreeMap<ShaderManager.GlobalShader, ShaderParams> globalShaders){
         renderSeq = renderSequence;
         glblShaders = globalShaders;
         checkForCustomShader();
@@ -44,7 +56,7 @@ public class RenderParams {
         return renderSeq;
     }
 
-    public TreeMap<Integer, ArrayList<ShaderParams>> getGlobalShaders(){
+    public TreeMap<ShaderManager.GlobalShader, ShaderParams> getGlobalShaders(){
         return glblShaders;
     }
 

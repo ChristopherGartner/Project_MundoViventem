@@ -4,7 +4,16 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
+/**
+ * Data class to encapsulate a texture string alias, its shader parameters, its (possibly multiple) locations as well
+ * as its size)
+ * Multiple locations can only be used if all other parameters stay the same. If shader or size differs, a new
+ * TextureParams has to be created.
+ */
+
 public class TextureParams {
+
+    public static final Vector2 USE_TEX_SIZE = new Vector2(-1, -1);
 
     private String texture;
     private ShaderParams shaderParams;

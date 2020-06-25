@@ -175,11 +175,12 @@ public abstract class GameState
     }
 
     /**
-     * Performs an update for all instantiated game objects
+     * Performs an updateUniforms for all instantiated game objects
      */
     public void update()
     {
         ManagerMall.getGameObjectManager().updateInstantiatedGameObjects(this.getInstantiatedGameObjects());
+        ManagerMall.getShaderManager().updateGlobalShaders();
     }
 
     /**

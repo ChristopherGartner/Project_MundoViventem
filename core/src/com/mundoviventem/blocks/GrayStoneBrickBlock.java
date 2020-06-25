@@ -46,7 +46,15 @@ public class GrayStoneBrickBlock extends BaseBlock
     {
         TreeMap<Integer, ArrayList<TextureParams>> treeMap = new TreeMap<>();
 
-        TextureParams textureParam = new TextureParams("block_gray_stone_brick", this.getInitialLocation(), new Vector2(16, 16));
+        ArrayList<Vector2> locations = new ArrayList<>();
+
+        for(int x = 0; x < 20; x++){
+            for(int y = 0; y < 20; y++){
+                locations.add(new Vector2(getInitialLocation().x+160*x, getInitialLocation().y+160*y));
+            }
+        }
+
+        TextureParams textureParam = new TextureParams("block_gray_stone_brick", locations, new Vector2(160, 160));
         ArrayList<TextureParams> textureParams = new ArrayList<>();
         textureParams.add(textureParam);
 

@@ -41,7 +41,7 @@ void main(void)
     (sin(time+3.1415f*2.0f/3.0f)+1.0f)/2.0f);
 
 
-    gl_FragColor = localColor * vec4(rainbow, 1.0f);
+    gl_FragColor = mix(localColor, vec4(0.5f, 0.5f, 1.0f, 1.0f), 0.5f);
 
         /*
     	vec2 position = ( gl_FragCoord.xy / u_resolution.xy ) + u_mouse / 4.0;

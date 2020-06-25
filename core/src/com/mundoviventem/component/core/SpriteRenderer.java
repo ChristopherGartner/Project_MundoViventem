@@ -2,9 +2,9 @@ package com.mundoviventem.component.core;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.mundoviventem.component.RenderManager;
 import com.mundoviventem.game.ManagerMall;
 import com.mundoviventem.render.*;
 
@@ -22,17 +22,19 @@ public class SpriteRenderer extends BaseComponent implements Disposable {
     private RenderParams renderParameters;
     private SpriteBatch batch;
     private boolean areCustomShadersUsed = false;
+    private boolean sleep = false;
 
 
     public SpriteRenderer(Transform transformComponent){
         trnsfrmCmp = transformComponent;
-        batch = new SpriteBatch(8191);//ManagerMall.getRenderManager().getSpriteBatch();
+        batch = new SpriteBatch(8191);
         ManagerMall.getDisposingManager().addNewDisposableObject(this);
     }
 
 
     public SpriteRenderer(Transform transformComponent, RenderParams renderParams){
         trnsfrmCmp = transformComponent;
+        batch = new SpriteBatch(8191);
         ManagerMall.getDisposingManager().addNewDisposableObject(this);
         renderParameters = renderParams;
         processRenderParams();
@@ -70,10 +72,11 @@ public class SpriteRenderer extends BaseComponent implements Disposable {
     @Override
     public void update()
     {
+        if(sleep) return;
         for(ArrayList<TextureParams> al : renderSequence.values()){
             for(TextureParams tp : al){
                 if(tp.getShaderParams() == null || tp.getShaderParams().getShader() == null) continue;
-                ManagerMall.getShaderManager().update(tp.getShaderParams());
+                ManagerMall.getShaderManager().updateUniforms(tp.getShaderParams());
             }
         }
     }
@@ -82,16 +85,17 @@ public class SpriteRenderer extends BaseComponent implements Disposable {
     @Override
     public void gameObjectStartsSleeping()
     {
-        // TODO
+        this.sleep = true;
     }
 
     @Override
     public void gameObjectAwakens() {
-
+        this.sleep = false;
     }
 
     public void render()
     {
+        if(sleep) return;
         for(Map.Entry<Integer, ArrayList<TextureParams>> entry : renderSequence.entrySet()){
             for(TextureParams tp : entry.getValue()){
 
@@ -103,13 +107,18 @@ public class SpriteRenderer extends BaseComponent implements Disposable {
                     batch.setShader(ManagerMall.getShaderManager().getDefaultShader());
                 }
 
-                Vector2 size = tp.getSize().x < 0 ? new Vector2(tex.getWidth(), tex.getHeight()) : tp.getSize();
+                Vector2 size = tp.getSize().equals(TextureParams.USE_TEX_SIZE) ?
+                        new Vector2(tex.getWidth(), tex.getHeight()) : tp.getSize();
+
+
+                ManagerMall.getRenderManager().beginPrimaryFB();
                 batch.begin();
                 for(Vector2 coord : tp.getLocations()){
                     tex.bind(0);
                     batch.draw(tex, coord.x, coord.y, size.x, size.y);
                 }
                 batch.end();
+                ManagerMall.getRenderManager().endPrimaryFB();
             }
         }
     }

@@ -12,6 +12,7 @@ import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
 import com.mundoviventem.render.RenderParams;
+import com.mundoviventem.render.ShaderManager;
 import com.mundoviventem.render.ShaderParams;
 import com.mundoviventem.render.TextureParams;
 import com.mundoviventem.states.MenuState;
@@ -46,7 +47,7 @@ public class Playground
     {
 
         this.menuState = new MenuState();
-
+        /*
         GameObject testimg = new GameObject(UUID.randomUUID());
         testimg.setName("Test Image");
         menuState.addInstantiatedGameObject(testimg);
@@ -62,7 +63,7 @@ public class Playground
         al.add(new Vector2(1000,1000));
         String newShaderPair = ManagerMall.getShaderManager().getCustomPair("DEFAULT", "rainbow");
         ShaderParams sp = new ShaderParams(newShaderPair);
-        TextureParams b = new TextureParams("badlogic", al, new Vector2(-1, -1), sp);
+        TextureParams b = new TextureParams("badlogic", al, TextureParams.USE_TEX_SIZE, sp);
         ArrayList<TextureParams> tl1 = new ArrayList<>();
         tl1.add(a);
         ArrayList<TextureParams> tl2 = new ArrayList<>();
@@ -71,7 +72,11 @@ public class Playground
         map1.put(1, tl1);
         map1.put(0, tl2);
 
-        RenderParams rp1 = new RenderParams(map1);
+        TreeMap<ShaderManager.GlobalShader, ShaderParams> globalShaders = new TreeMap<>();
+        globalShaders.put(ShaderManager.GlobalShader.BLOODY_SCREEN, new ShaderParams("test", new ArrayList<>(), 3.0));//
+                //ManagerMall.getShaderManager().SHADER_LIFETIME_INFINITY));
+
+        RenderParams rp1 = new RenderParams(map1, globalShaders);
         sr.setNewRenderParams(rp1);
 
         GameObject huso = new GameObject(UUID.randomUUID());
@@ -81,9 +86,9 @@ public class Playground
         SpriteRenderer huso_sr = new SpriteRenderer(huso.getTransformComponent());
         huso.addComponent(huso_sr);
         menuState.getGameStateRenderer().addGameObject(huso);
-        RenderParams rp2 = new RenderParams("hitler", new Vector2(300,300), new Vector2(-1, -1));
+        RenderParams rp2 = new RenderParams("hitler", new Vector2(300,300), TextureParams.USE_TEX_SIZE);
         huso_sr.setNewRenderParams(rp2);
-
+*/
         inputObject = new GameObject(UUID.randomUUID());
         inputObject.setName("Leon's Nightmare");
         InputHandler inputHandler = new InputHandler();

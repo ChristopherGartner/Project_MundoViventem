@@ -19,7 +19,7 @@ public class UpdateExecutor
     public final static int NUMBER_OF_TICKS = 120;
 
     /**
-     * Starts the fixed update thread
+     * Starts the fixed updateUniforms thread
      */
     public void startFixedUpdateThread()
     {
@@ -30,20 +30,20 @@ public class UpdateExecutor
     }
 
     /**
-     * Performs an fixed update. A fixed update has a specified execute-sleep algorithm determined
+     * Performs an fixed updateUniforms. A fixed updateUniforms has a specified execute-sleep algorithm determined
      * by the numbers of ticks. This method should only get called by the FixedUpdateExecutionThread
      */
     public void fixedUpdate()
     {
-        Printer.print("Performing fixed update", Printer.Printing_State.DEBUG);
+        Printer.print("Performing fixed updateUniforms", Printer.Printing_State.DEBUG);
     }
 
     /**
-     * Performs a single update. This updates are dependent on the frames per second
+     * Performs a single updateUniforms. This updates are dependent on the frames per second
      */
     public void update()
     {
-        Printer.print("Performing update", Printer.Printing_State.DEBUG);
+        Printer.print("Performing updateUniforms", Printer.Printing_State.DEBUG);
 
         ArrayList<KeyActionBinding> keyActionBindings = ManagerMall.getKeyActionBindingRepository().getKeyActionBindings();
 
@@ -58,19 +58,16 @@ public class UpdateExecutor
             }
         }
 
-        // Calls update and render of the GameStateManager
+        // Calls updateUniforms and render of the GameStateManager
         ManagerMall.getGameStateManager().updateTopState();
     }
 
     /**
-     * Gets performed after each update call
+     * Gets performed after each updateUniforms call
      */
     public void lateUpdate()
     {
-        Printer.print("Performing late update", Printer.Printing_State.DEBUG);
-
-        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Printer.print("Performing late updateUniforms", Printer.Printing_State.DEBUG);
 
         ManagerMall.getGameStateManager().renderTopState();
     }
