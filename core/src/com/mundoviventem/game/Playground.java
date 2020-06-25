@@ -2,15 +2,12 @@ package com.mundoviventem.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
+import com.mundoviventem.blocks.GrayStoneBrickBlock;
 import com.mundoviventem.component.core.InputHandler;
 import com.mundoviventem.component.core.SoundManager;
 import com.mundoviventem.component.core.SpriteRenderer;
 import com.mundoviventem.component.core.WorldComponent;
-import com.mundoviventem.component.core.input.KeyActionBinding;
 import com.mundoviventem.component.core.sound_manager.SoundConfiguration;
 import com.mundoviventem.component.game_objects.GameObject;
 import com.mundoviventem.io.file_type_managers.KeyValueFileByteManager;
@@ -18,9 +15,7 @@ import com.mundoviventem.render.RenderParams;
 import com.mundoviventem.render.ShaderParams;
 import com.mundoviventem.render.TextureParams;
 import com.mundoviventem.states.MenuState;
-import com.mundoviventem.util.Printer;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -35,6 +30,7 @@ public class Playground
     GameObject world;
     GameObject soundObject;
     GameObject inputObject;
+    GameObject gray_stone_brick_test;
 
     MenuState menuState;
 
@@ -94,6 +90,12 @@ public class Playground
         inputObject.addComponent(inputHandler);
         menuState.setInputObject(inputObject);
         menuState.initializeGameState();
+
+
+        this.gray_stone_brick_test = (new GrayStoneBrickBlock(new Vector2(50, 50))).convertToGameObject();
+        this.gray_stone_brick_test.setName("Test Gray Stone Brick");
+        menuState.addInstantiatedGameObject(this.gray_stone_brick_test);
+        menuState.getGameStateRenderer().addGameObject(this.gray_stone_brick_test);
 
 
         world = new GameObject(UUID.randomUUID());

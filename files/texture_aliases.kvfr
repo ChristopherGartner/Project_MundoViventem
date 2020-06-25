@@ -1,3 +1,5 @@
 badlogic=test_directory\badlogic.jpg
 test_img=test_directory\test_img.jpg
 hitler=test_directory\glueckssymbol.png
+
+block_gray_stone_brick=blocks\gray_stone_brick.png
