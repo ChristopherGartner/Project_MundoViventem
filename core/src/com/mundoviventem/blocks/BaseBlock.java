@@ -166,6 +166,7 @@ public abstract class BaseBlock implements GameObjectConvertable
             for (SoundBuild soundBuild : this.getAllSoundBuilds()) {
                 soundManager.registerNewSound(soundBuild.getSound(), soundBuild.getRegistrationName(), soundBuild.getSoundConfiguration());
             }
+            blockObject.addComponent(soundManager);
         }
 
         if(this.getBlockMaterial() != null) {
