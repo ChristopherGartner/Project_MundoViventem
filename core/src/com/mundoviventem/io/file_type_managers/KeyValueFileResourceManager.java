@@ -62,23 +62,29 @@ public class KeyValueFileResourceManager extends FileTypeManager
         ArrayList<String> resourceAliasArrayList = new ArrayList<>();
 
         for(String line: content.split(System.lineSeparator())) {
-            String[] lineArr = line.split(KVFR_SEPERATION_REGEX);
 
-            String alias = lineArr[0];
-            String path  = lineArr[1];
+            String lineWithRemovedEmptySpaces = line.replaceAll("\\s", "");
 
-            // Validate that structure only consists of one key and one value
-            if(lineArr.length != 2) {
-                return false;
+            // Replaces all empty space types and then splits the line
+            if(!lineWithRemovedEmptySpaces.equals("")) {
+                String[] lineArr = lineWithRemovedEmptySpaces.split(KVFR_SEPERATION_REGEX);
+
+                String alias = lineArr[0];
+                String path  = lineArr[1];
+
+                // Validate that structure only consists of one key and one value
+                if(lineArr.length != 2) {
+                    return false;
+                }
+
+                String filePath = Main.Project_Path + "\\core\\assets\\" + this.getResourceSpecificPath() + "\\" + path;
+                // Validate that given resource path is correct
+                if(!(new File(filePath)).exists()) {
+                    return false;
+                }
+                resourceAliasArrayList.add(alias);
+                resourcePathArrayList.add(path);
             }
-
-            String filePath = Main.Project_Path + "\\core\\assets\\" + this.getResourceSpecificPath() + "\\" + path;
-            // Validate that given resource path is correct
-            if(!(new File(filePath)).exists()) {
-                return false;
-            }
-            resourceAliasArrayList.add(alias);
-            resourcePathArrayList.add(path);
         }
 
         // Validate that resource paths and aliases are unique
@@ -106,8 +112,13 @@ public class KeyValueFileResourceManager extends FileTypeManager
         HashMap<String, String> convertedContent = new HashMap<>();
 
         for (String line: content.split(System.lineSeparator())) {
-            String[] lineArr = line.split(KVFR_SEPERATION_REGEX);
-            convertedContent.put(lineArr[0], lineArr[1]);
+
+            // Remove all types of empty spaces from line
+            String lineWithRemovedEmptySpaces = line.replaceAll("\\s", "");
+            if(!lineWithRemovedEmptySpaces.equals("")) {
+                String[] lineArr = line.split(KVFR_SEPERATION_REGEX);
+                convertedContent.put(lineArr[0], lineArr[1]);
+            }
         }
 
         return convertedContent;
