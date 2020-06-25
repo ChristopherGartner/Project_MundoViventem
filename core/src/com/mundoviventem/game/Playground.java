@@ -97,8 +97,9 @@ public class Playground
         menuState.initializeGameState();
 
 
-        this.gray_stone_brick_test = (new GrayStoneBrickBlock(new Vector2(50, 50))).convertToGameObject();
+        this.gray_stone_brick_test = (new GrayStoneBrickBlock(new Vector2(0, 0))).convertToGameObject();
         this.gray_stone_brick_test.setName("Test Gray Stone Brick");
+        ((SoundManager) this.gray_stone_brick_test.getComponentFromClass(SoundManager.class)).getSoundRegistrations().forEach(soundRegistration -> {soundRegistration.setPlaying(true);});
         menuState.addInstantiatedGameObject(this.gray_stone_brick_test);
         menuState.getGameStateRenderer().addGameObject(this.gray_stone_brick_test);
 

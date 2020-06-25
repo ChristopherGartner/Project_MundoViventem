@@ -18,13 +18,12 @@ public class SoundManager extends BaseComponent
     @Override
     public void onEnable()
     {
-        this.soundRegistrations = new ArrayList<>();
     }
 
     @Override
     public void onDisable()
     {
-
+        this.soundRegistrations = new ArrayList<>();
     }
 
     @Override

@@ -48,8 +48,8 @@ public class GrayStoneBrickBlock extends BaseBlock
 
         ArrayList<Vector2> locations = new ArrayList<>();
 
-        for(int x = 0; x < 20; x++){
-            for(int y = 0; y < 20; y++){
+        for(int x = 0; x < 200; x++){
+            for(int y = 0; y < 200; y++){
                 locations.add(new Vector2(getInitialLocation().x+160*x, getInitialLocation().y+160*y));
             }
         }
