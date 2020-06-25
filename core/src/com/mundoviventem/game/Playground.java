@@ -103,7 +103,7 @@ public class Playground
         menuState.addInstantiatedGameObject(world);
 
 
-        Sound sound = Gdx.audio.newSound(Gdx.files.internal(ManagerMall.getSoundRepository().getSound("test_song")));
+        Sound sound = ManagerMall.getSoundRepository().getSound("test_song");
 
         soundObject = new GameObject(UUID.randomUUID());
         soundObject.setName("Sound Object");

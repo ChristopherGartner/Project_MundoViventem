@@ -22,6 +22,7 @@ public class Main extends ApplicationAdapter {
 		// Initializes all Managers that have things that should get disposed
 		ManagerMall.getDisposingManager().addNewDisposableObject(ManagerMall.getTextureRepository());
 		ManagerMall.getDisposingManager().addNewDisposableObject(ManagerMall.getRenderManager());
+		ManagerMall.getDisposingManager().addNewDisposableObject(ManagerMall.getSoundRepository());
 
 		// Testing ground for development purposes
 		this.playground = new Playground();
