@@ -35,6 +35,10 @@ public class RenderParams {
         checkForCustomShader();
     }
 
+    /**
+     * Searches all TextureParams for any shaderParams provided and sets the flag accordingly
+     */
+
     private void checkForCustomShader(){
         for(ArrayList<TextureParams> al : renderSeq.values()){
             for(TextureParams tp : al){
