@@ -1,6 +1,7 @@
 package com.mundoviventem.component.core;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mundoviventem.world.World;
 
 /**
  * Component for world data
@@ -8,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 public class WorldComponent extends BaseComponent
 {
     private Vector2 worldSize;
+    private World world;
 
     /**
      * Constructor of WorldComponent.
@@ -43,7 +45,7 @@ public class WorldComponent extends BaseComponent
     @Override
     public void onEnable()
     {
-
+        world = new World(worldSize);
     }
 
     @Override

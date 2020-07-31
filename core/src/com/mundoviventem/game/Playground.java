@@ -106,8 +106,7 @@ public class Playground
 
         world = new GameObject(UUID.randomUUID());
         world.setName("World");
-        world.addComponent(new WorldComponent(new Vector2(10000, 5000)));
-        world.addComponent(new WorldComponent(new Vector2(20, 30)));
+        world.addComponent(new WorldComponent(new Vector2(3200, 320)));
         menuState.addInstantiatedGameObject(world);
 
 

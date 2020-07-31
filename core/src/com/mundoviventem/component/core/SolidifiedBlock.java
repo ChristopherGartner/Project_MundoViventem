@@ -12,6 +12,11 @@ public class SolidifiedBlock extends BaseComponent
     public enum Block_Material
     {
         Stone,
+        Dirt,
+        Grass,
+        Clay,
+        Sand,
+        Gravel
     }
 
     private float blockHardness;

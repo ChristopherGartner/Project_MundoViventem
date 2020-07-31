@@ -44,6 +44,7 @@ public class ShaderParams {
     public ArrayList<CustomUniform> getUniforms(){
         return uniforms;
     }
+
     public Double getLifetime(){
         return lifetime;
     }

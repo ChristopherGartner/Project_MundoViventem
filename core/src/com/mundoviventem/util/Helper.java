@@ -4,6 +4,8 @@ import java.io.File;
 
 public class Helper {
 
+    public static final int PxPerUnit = 16;
+
     public static String getFileExtension(File file) {
         String name = file.getName();
         int lastIndexOf = name.lastIndexOf(".");
