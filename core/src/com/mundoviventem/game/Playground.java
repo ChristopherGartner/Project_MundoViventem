@@ -124,11 +124,6 @@ public class Playground
 //		}
         //keyValueFileManager.createFile(contentOfFile, "files\\test");
 
-        try {
-            System.out.println(keyValueFileManager.getContent("files\\test"));
-        } catch (Exception exception) {
-            System.err.println("Du Lappen");
-        }
 
 
         // Pushes the Menu Game State to the top
