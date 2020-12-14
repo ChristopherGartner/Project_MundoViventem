@@ -33,7 +33,7 @@ public class Playground
     GameObject inputObject;
     GameObject gray_stone_brick_test;
 
-    MenuState menuState;
+    public static MenuState menuState;
 
     public Playground()
     {
@@ -97,18 +97,13 @@ public class Playground
         menuState.initializeGameState();
 
 
-        this.gray_stone_brick_test = (new GrayStoneBrickBlock(new Vector2(0, 0))).convertToGameObject();
-        this.gray_stone_brick_test.setName("Test Gray Stone Brick");
-        ((SoundManager) this.gray_stone_brick_test.getComponentFromClass(SoundManager.class)).getSoundRegistrations().forEach(soundRegistration -> {soundRegistration.setPlaying(true);});
-        menuState.addInstantiatedGameObject(this.gray_stone_brick_test);
-        menuState.getGameStateRenderer().addGameObject(this.gray_stone_brick_test);
 
-
+/*
         world = new GameObject(UUID.randomUUID());
         world.setName("World");
         world.addComponent(new WorldComponent(new Vector2(3200, 320)));
         menuState.addInstantiatedGameObject(world);
-
+*/
 
         Sound sound = ManagerMall.getSoundRepository().getSound("test_song");
 

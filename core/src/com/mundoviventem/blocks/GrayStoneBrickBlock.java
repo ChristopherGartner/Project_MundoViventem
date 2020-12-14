@@ -11,6 +11,7 @@ import com.mundoviventem.render.TextureParams;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+
 /**
  * Basic gray stone brick block
  */
@@ -46,15 +47,9 @@ public class GrayStoneBrickBlock extends BaseBlock
     {
         TreeMap<Integer, ArrayList<TextureParams>> treeMap = new TreeMap<>();
 
-        ArrayList<Vector2> locations = new ArrayList<>();
 
-        for(int x = 0; x < 200; x++){
-            for(int y = 0; y < 200; y++){
-                locations.add(new Vector2(getInitialLocation().x+160*x, getInitialLocation().y+160*y));
-            }
-        }
 
-        TextureParams textureParam = new TextureParams("block_gray_stone_brick", locations, new Vector2(160, 160));
+        TextureParams textureParam = new TextureParams("block_gray_stone_brick", getInitialLocation(), new Vector2(160, 160));
         ArrayList<TextureParams> textureParams = new ArrayList<>();
         textureParams.add(textureParam);
 

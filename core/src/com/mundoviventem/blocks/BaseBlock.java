@@ -35,7 +35,7 @@ public abstract class BaseBlock implements GameObjectConvertable
     /**
      * Whether the block has an associated sound manager or not
      */
-    protected boolean hasSoundManager = true;
+    protected boolean hasSoundManager = false;
 
     private String id;
     private SolidifiedBlock.Block_Material blockMaterial = null;
